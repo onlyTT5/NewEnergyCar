@@ -6,6 +6,7 @@ SET(SOURCES screens/ui_Screen1.c
     ui_theme_manager.c
     ui_themes.c
     ui.c
+    ui_chinese_font.c
     components/ui_comp_hook.c
     ui_helpers.c
     images/ui_img_lightning_png.c

@@ -7,7 +7,8 @@
 #define _SQUARELINE_PROJECT_UI_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
 #include "lvgl/lvgl.h"
@@ -17,8 +18,7 @@ extern "C" {
 #include "ui_theme_manager.h"
 #include "ui_themes.h"
 
-
-///////////////////// SCREENS ////////////////////
+    ///////////////////// SCREENS ////////////////////
 
 #include "screens/ui_Screen1.h"
 #include "screens/ui_Screen2.h"
@@ -26,51 +26,65 @@ extern "C" {
 #include "screens/ui_Screen4.h"
 #include "screens/ui_Screen5.h"
 
-///////////////////// VARIABLES ////////////////////
+    ///////////////////// VARIABLES ////////////////////
 
+    // EVENTS
 
-// EVENTS
+    extern lv_obj_t *ui____initial_actions0;
 
-extern lv_obj_t * ui____initial_actions0;
+    // IMAGES AND IMAGE SETS
+    LV_IMG_DECLARE(ui_img_lightning_png);   // assets/lightning.png
+    LV_IMG_DECLARE(ui_img_clock_png);       // assets/clock.png
+    LV_IMG_DECLARE(ui_img_location_png);    // assets/location.png
+    LV_IMG_DECLARE(ui_img_car_png);         // assets/car.png
+    LV_IMG_DECLARE(ui_img_admin_png);       // assets/admin.png
+    LV_IMG_DECLARE(ui_img_dot_png);         // assets/dot.png
+    LV_IMG_DECLARE(ui_img_user_png);        // assets/user.png
+    LV_IMG_DECLARE(ui_img_model3_png);      // assets/model3.png
+    LV_IMG_DECLARE(ui_img_lixiang_png);     // assets/LiXiang.png
+    LV_IMG_DECLARE(ui_img_location2_png);   // assets/location2.png
+    LV_IMG_DECLARE(ui_img_temperature_png); // assets/temperature.png
+    LV_IMG_DECLARE(ui_img_1753557361);      // assets/dot (2).png
+    LV_IMG_DECLARE(ui_img_1142343547);      // assets/icons8-star-48.png
+    LV_IMG_DECLARE(ui_img_charing_png);     // assets/charing.png
+    LV_IMG_DECLARE(ui_img_flash_png);       // assets/flash.png
+    LV_IMG_DECLARE(ui_img_location1_png);   // assets/location1.png
+    LV_IMG_DECLARE(ui_img_battery_png);     // assets/battery.png
+    LV_IMG_DECLARE(ui_img_clock2_png);      // assets/clock2.png
+    LV_IMG_DECLARE(ui_img_dollar2_png);     // assets/dollar2.png
+    LV_IMG_DECLARE(ui_img_email_png);       // assets/email.png
+    LV_IMG_DECLARE(ui_img_phone_png);       // assets/phone.png
+    LV_IMG_DECLARE(ui_img_wallet_png);      // assets/wallet.png
+    LV_IMG_DECLARE(ui_img_qrbanana_png);    // assets/QRBanana.png
+    LV_IMG_DECLARE(ui_img_note1_png);       // assets/note1.png
+    LV_IMG_DECLARE(ui_img_car2_png);        // assets/car2.png
+    LV_IMG_DECLARE(ui_img_setting_png);     // assets/setting.png
+    LV_IMG_DECLARE(ui_img_note2_png);       // assets/note2.png
+    LV_IMG_DECLARE(ui_img_user2_png);       // assets/user2.png
+    LV_IMG_DECLARE(ui_img_admin1_png);      // assets/admin1.png
+    LV_IMG_DECLARE(ui_img_shield_png);      // assets/shield.png
+    LV_IMG_DECLARE(ui_img_user1_png);       // assets/user1.png
+    LV_IMG_DECLARE(ui_img_charing1_png);    // assets/charing1.png
+    LV_IMG_DECLARE(ui_img_ranking2_png);    // assets/ranking2.png
 
-// IMAGES AND IMAGE SETS
-LV_IMG_DECLARE(ui_img_lightning_png);    // assets/lightning.png
-LV_IMG_DECLARE(ui_img_clock_png);    // assets/clock.png
-LV_IMG_DECLARE(ui_img_location_png);    // assets/location.png
-LV_IMG_DECLARE(ui_img_car_png);    // assets/car.png
-LV_IMG_DECLARE(ui_img_admin_png);    // assets/admin.png
-LV_IMG_DECLARE(ui_img_dot_png);    // assets/dot.png
-LV_IMG_DECLARE(ui_img_user_png);    // assets/user.png
-LV_IMG_DECLARE(ui_img_model3_png);    // assets/model3.png
-LV_IMG_DECLARE(ui_img_lixiang_png);    // assets/LiXiang.png
-LV_IMG_DECLARE(ui_img_location2_png);    // assets/location2.png
-LV_IMG_DECLARE(ui_img_temperature_png);    // assets/temperature.png
-LV_IMG_DECLARE(ui_img_1753557361);    // assets/dot (2).png
-LV_IMG_DECLARE(ui_img_1142343547);    // assets/icons8-star-48.png
-LV_IMG_DECLARE(ui_img_charing_png);    // assets/charing.png
-LV_IMG_DECLARE(ui_img_flash_png);    // assets/flash.png
-LV_IMG_DECLARE(ui_img_location1_png);    // assets/location1.png
-LV_IMG_DECLARE(ui_img_battery_png);    // assets/battery.png
-LV_IMG_DECLARE(ui_img_clock2_png);    // assets/clock2.png
-LV_IMG_DECLARE(ui_img_dollar2_png);    // assets/dollar2.png
-LV_IMG_DECLARE(ui_img_email_png);    // assets/email.png
-LV_IMG_DECLARE(ui_img_phone_png);    // assets/phone.png
-LV_IMG_DECLARE(ui_img_wallet_png);    // assets/wallet.png
-LV_IMG_DECLARE(ui_img_qrbanana_png);    // assets/QRBanana.png
-LV_IMG_DECLARE(ui_img_note1_png);    // assets/note1.png
-LV_IMG_DECLARE(ui_img_car2_png);    // assets/car2.png
-LV_IMG_DECLARE(ui_img_setting_png);    // assets/setting.png
-LV_IMG_DECLARE(ui_img_note2_png);    // assets/note2.png
-LV_IMG_DECLARE(ui_img_user2_png);    // assets/user2.png
-LV_IMG_DECLARE(ui_img_admin1_png);    // assets/admin1.png
-LV_IMG_DECLARE(ui_img_shield_png);    // assets/shield.png
-LV_IMG_DECLARE(ui_img_user1_png);    // assets/user1.png
-LV_IMG_DECLARE(ui_img_charing1_png);    // assets/charing1.png
-LV_IMG_DECLARE(ui_img_ranking2_png);    // assets/ranking2.png
+    // UI INIT
+    void ui_init(void);
+    void ui_destroy(void);
 
-// UI INIT
-void ui_init(void);
-void ui_destroy(void);
+    // 中文字体支持函数 - 一劳永逸的解决方案
+    lv_font_t *get_chinese_font(int fontsize);
+
+    // 创建中文标签的便捷函数
+    lv_obj_t *create_chinese_label(lv_obj_t *parent, const char *text);
+    lv_obj_t *create_chinese_label_sized(lv_obj_t *parent, const char *text, int fontsize);
+
+    // 为现有标签应用中文字体
+    void apply_chinese_font_to_label(lv_obj_t *label);
+    void apply_chinese_font_to_label_sized(lv_obj_t *label, int fontsize);
+
+    // 创建带样式的中文标签
+    lv_obj_t *create_styled_chinese_label(lv_obj_t *parent, const char *text, lv_color_t color, lv_align_t align);
+    lv_obj_t *create_styled_chinese_label_sized(lv_obj_t *parent, const char *text, lv_color_t color, lv_align_t align, int fontsize);
 
 #ifdef __cplusplus
 } /*extern "C"*/
