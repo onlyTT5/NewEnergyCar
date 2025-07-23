@@ -650,7 +650,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_x(ui_WelcomeUser, -35);
     lv_obj_set_y(ui_WelcomeUser, 10);
     lv_obj_set_align(ui_WelcomeUser, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_WelcomeUser, "Welcome LWH");
+    lv_label_set_text(ui_WelcomeUser, "Welcome user");
     lv_obj_set_style_text_color(ui_WelcomeUser, lv_color_hex(0x999C9C), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WelcomeUser, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WelcomeUser, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1781,7 +1781,7 @@ void ui_Screen4_screen_init(void)
 
     ui_PersonInfo = lv_obj_create(ui_OperaPanel4);
     lv_obj_set_width(ui_PersonInfo, 600);
-    lv_obj_set_height(ui_PersonInfo, 300);
+    lv_obj_set_height(ui_PersonInfo, 280);
     lv_obj_set_align(ui_PersonInfo, LV_ALIGN_TOP_MID);
     lv_obj_remove_flag(ui_PersonInfo, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_PersonInfo, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1813,56 +1813,16 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_width(ui_PortalName, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_PortalName, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_PortalName, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_PortalName, "LWH");
+    lv_label_set_text(ui_PortalName, "user");
     lv_obj_set_style_text_color(ui_PortalName, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PortalName, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_PortalName, &lv_font_montserrat_20, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_EmailPanel = lv_obj_create(ui_PersonInfo);
-    lv_obj_set_width(ui_EmailPanel, 500);
-    lv_obj_set_height(ui_EmailPanel, 50);
-    lv_obj_set_x(ui_EmailPanel, 0);
-    lv_obj_set_y(ui_EmailPanel, 50);
-    lv_obj_set_align(ui_EmailPanel, LV_ALIGN_CENTER);
-    lv_obj_remove_flag(ui_EmailPanel, LV_OBJ_FLAG_SCROLLABLE); /// Flags
-    lv_obj_set_style_bg_color(ui_EmailPanel, lv_color_hex(0x1F1F1F), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_EmailPanel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_EmailPanel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_EmailText3 = lv_label_create(ui_EmailPanel);
-    lv_obj_set_width(ui_EmailText3, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_EmailText3, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_x(ui_EmailText3, 40);
-    lv_obj_set_y(ui_EmailText3, -10);
-    lv_obj_set_align(ui_EmailText3, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_EmailText3, "Email");
-    lv_obj_set_style_text_color(ui_EmailText3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_EmailText3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_EmailTx3 = lv_label_create(ui_EmailPanel);
-    lv_obj_set_width(ui_EmailTx3, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_EmailTx3, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_x(ui_EmailTx3, 40);
-    lv_obj_set_y(ui_EmailTx3, 10);
-    lv_obj_set_align(ui_EmailTx3, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_EmailTx3, "2218201514@qq.com");
-    lv_obj_set_style_text_color(ui_EmailTx3, lv_color_hex(0x959595), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_EmailTx3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_EmailTx3, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_Image22 = lv_image_create(ui_EmailPanel);
-    lv_image_set_src(ui_Image22, &ui_img_email_png);
-    lv_obj_set_width(ui_Image22, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_Image22, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_Image22, LV_ALIGN_LEFT_MID);
-    lv_obj_add_flag(ui_Image22, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image22, LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_PhonePanel = lv_obj_create(ui_PersonInfo);
     lv_obj_set_width(ui_PhonePanel, 500);
     lv_obj_set_height(ui_PhonePanel, 50);
     lv_obj_set_x(ui_PhonePanel, 0);
-    lv_obj_set_y(ui_PhonePanel, 110);
+    lv_obj_set_y(ui_PhonePanel, 80);
     lv_obj_set_align(ui_PhonePanel, LV_ALIGN_CENTER);
     lv_obj_remove_flag(ui_PhonePanel, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_PhonePanel, lv_color_hex(0x1F1F1F), LV_PART_MAIN | LV_STATE_DEFAULT);
