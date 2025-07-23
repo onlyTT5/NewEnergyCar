@@ -3,6 +3,7 @@
 
 #include "lvgl.h"
 #include "user_management.h"
+#include "ui.h" // 包含UI对象声明
 
 // 登录界面函数
 void show_login_screen(void);

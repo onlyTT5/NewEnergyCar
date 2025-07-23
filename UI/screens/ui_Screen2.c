@@ -86,8 +86,6 @@ void ui_event_LoginBtn(lv_event_t *e)
     if (event_code == LV_EVENT_CLICKED)
     {
         handle_login_attempt();
-        // 登录成功后可以跳转到主界面
-        // _ui_screen_change(&ui_Screen4, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen4_screen_init);
     }
 }
 

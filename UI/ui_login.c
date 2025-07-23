@@ -24,7 +24,11 @@ void handle_login_attempt(void)
             // 登录成功，更新用户管理显示
             update_user_management_display();
             printf("Login successful, redirecting to main screen\n");
-            // 这里可以添加跳转到主界面的代码
+            // 清空登录输入框
+            lv_textarea_set_text(ui_PhoneTx1, "");
+            lv_textarea_set_text(ui_PasswordTx, "");
+            // 跳转到主界面 Screen4
+            _ui_screen_change(&ui_Screen4, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen4_screen_init);
         }
         else
         {
@@ -109,7 +113,11 @@ void handle_register_attempt(void)
         lv_textarea_set_text(ui_ConfirmTx, "");
         // 更新用户管理显示
         update_user_management_display();
-        // 可以添加切换到登录界面的代码
+
+        // 注册成功后切换到登录界面
+        _ui_flag_modify(ui_RegisterOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        _ui_flag_modify(ui_LoginOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        printf("Switched to login interface after successful registration\n");
     }
     else
     {
