@@ -46,5 +46,6 @@ user_info_t *get_user_by_index(int index);
 int get_user_count(void);
 bool is_phone_exists(const char *phone);
 void init_admin_user(void);
+bool recharge_user_balance(float amount);
 
 #endif // USER_MANAGEMENT_H

@@ -229,3 +229,38 @@ int get_user_count(void)
 {
     return g_user_manager.user_count;
 }
+
+// 用户充值功能
+bool recharge_user_balance(float amount)
+{
+    if (g_user_manager.current_user == NULL)
+    {
+        printf("充值失败：没有当前登录用户\n");
+        return false;
+    }
+
+    if (amount <= 0)
+    {
+        printf("充值失败：充值金额必须大于0\n");
+        return false;
+    }
+
+    // 增加用户余额
+    g_user_manager.current_user->balance += amount;
+
+    printf("充值成功：用户 %s 充值 $%.2f，当前余额 $%.2f\n",
+           g_user_manager.current_user->phone, amount,
+           g_user_manager.current_user->balance);
+
+    // 保存到文件
+    if (save_users_to_file())
+    {
+        printf("用户数据已保存到文件\n");
+        return true;
+    }
+    else
+    {
+        printf("警告：充值成功但保存文件失败\n");
+        return false;
+    }
+}

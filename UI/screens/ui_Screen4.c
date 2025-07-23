@@ -4,6 +4,7 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
+#include "../user_management.h"
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
@@ -431,6 +432,40 @@ void ui_event_Button3(lv_event_t *e)
     if (event_code == LV_EVENT_CLICKED)
     {
         _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen1_screen_init);
+    }
+}
+
+void ui_event_Button2(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        printf("用户充值按钮被点击\n");
+
+        // 获取当前用户
+        user_info_t *current_user = get_current_user();
+        if (current_user == NULL)
+        {
+            printf("充值失败：没有当前登录用户\n");
+            return;
+        }
+
+        // 每次充值100美元
+        float recharge_amount = 100.0f;
+        if (recharge_user_balance(recharge_amount))
+        {
+            // 更新UI显示
+            char balance_text[32];
+            snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+            lv_label_set_text(ui_Label39, balance_text);
+
+            printf("充值成功：当前余额为 %s\n", balance_text);
+        }
+        else
+        {
+            printf("充值失败\n");
+        }
     }
 }
 
@@ -1774,7 +1809,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_x(ui_Label29, 0);
     lv_obj_set_y(ui_Label29, 20);
     lv_obj_set_align(ui_Label29, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label29, "59.1");
+    lv_label_set_text(ui_Label29, "60");
     lv_obj_set_style_text_color(ui_Label29, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label29, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label29, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2469,6 +2504,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_add_event_cb(ui_Label37, ui_event_Label37, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_StopChargeBtn, ui_event_StopChargeBtn, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Edit, ui_event_Edit, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button2, ui_event_Button2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ChangeBtn, ui_event_ChangeBtn, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_PhoneTx4, ui_event_PhoneTx4, LV_EVENT_ALL, NULL);
@@ -2482,6 +2518,21 @@ void ui_Screen4_screen_init(void)
 
     // 注册时间和日期标签到时间管理器
     ui_time_manager_register_labels(ui_Time, ui_Date);
+
+    // 初始化用户余额显示
+    user_info_t *current_user = get_current_user();
+    if (current_user != NULL)
+    {
+        char balance_text[32];
+        snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+        lv_label_set_text(ui_Label39, balance_text);
+        printf("Screen4 初始化：显示用户余额 %s\n", balance_text);
+    }
+    else
+    {
+        lv_label_set_text(ui_Label39, "$0.00");
+        printf("Screen4 初始化：没有当前用户，显示默认余额\n");
+    }
 }
 
 void ui_Screen4_screen_destroy(void)
