@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./UI/ui.h"
+#include "./UI/user_management.h"
+#include "./UI/ui_login.h"
 
 static const char *getenv_default(const char *name, const char *dflt)
 {
@@ -73,6 +75,12 @@ int main(void)
     lv_evdev_set_calibration(touch, 0, 0, 800, 480); // 蓝色边框的屏幕
 #endif
     ui_init();
+
+    // 初始化用户管理系统
+    user_manager_init();
+
+    // 显示登录界面
+    show_login_screen();
 
     // lv_example_event_1(); // 测试按钮例子
     // lv_example_freetype_1();

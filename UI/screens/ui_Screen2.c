@@ -4,6 +4,8 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
+#include "../user_management.h"
+#include "../ui_login.h"
 
 lv_obj_t *ui_Screen2 = NULL;
 lv_obj_t *ui_UserLoginSlider = NULL;
@@ -83,7 +85,9 @@ void ui_event_LoginBtn(lv_event_t *e)
 
     if (event_code == LV_EVENT_CLICKED)
     {
-        _ui_screen_change(&ui_Screen4, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen4_screen_init);
+        handle_login_attempt();
+        // 登录成功后可以跳转到主界面
+        // _ui_screen_change(&ui_Screen4, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen4_screen_init);
     }
 }
 
@@ -133,8 +137,10 @@ void ui_event_RegisterBtn(lv_event_t *e)
 
     if (event_code == LV_EVENT_CLICKED)
     {
-        _ui_flag_modify(ui_RegisterOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
-        _ui_flag_modify(ui_LoginOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        handle_register_attempt();
+        // 注册成功后保持在注册界面或切换到登录界面
+        // _ui_flag_modify(ui_RegisterOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
+        // _ui_flag_modify(ui_LoginOpera, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
 
@@ -468,7 +474,6 @@ void ui_Screen2_screen_init(void)
     lv_obj_remove_flag(ui_LoginBtn, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_bg_color(ui_LoginBtn, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_LoginBtn, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_add_event_cb(ui_LoginBtn, ClearText, LV_EVENT_ALL, NULL);
 
     ui_LoginBtnText = lv_label_create(ui_LoginBtn);
     lv_obj_set_width(ui_LoginBtnText, LV_SIZE_CONTENT);  /// 1
@@ -644,7 +649,6 @@ void ui_Screen2_screen_init(void)
     lv_obj_remove_flag(ui_RegisterBtn, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_bg_color(ui_RegisterBtn, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_RegisterBtn, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_add_event_cb(ui_RegisterBtn, ClearText, LV_EVENT_ALL, NULL);
 
     ui_LoginBtnText4 = lv_label_create(ui_RegisterBtn);
     lv_obj_set_width(ui_LoginBtnText4, LV_SIZE_CONTENT);  /// 1

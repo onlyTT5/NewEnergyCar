@@ -87,6 +87,9 @@ extern "C"
     lv_obj_t *create_styled_chinese_label(lv_obj_t *parent, const char *text, lv_color_t color, lv_align_t align);
     lv_obj_t *create_styled_chinese_label_sized(lv_obj_t *parent, const char *text, lv_color_t color, lv_align_t align, int fontsize);
 
+    // 用户管理相关函数
+    void update_user_management_display(void);
+
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif

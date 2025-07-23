@@ -4,6 +4,7 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
+#include "../user_management.h"
 #include <time.h>
 #include <stdio.h>
 #include <string.h>
@@ -912,14 +913,6 @@ void ui_Screen5_screen_init(void)
     lv_obj_set_style_text_color(ui_UserNum1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_UserName1 = lv_label_create(ui_User1);
-    lv_obj_set_width(ui_UserName1, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName1, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName1, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName1, "LWH");
-    lv_obj_set_style_text_color(ui_UserName1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_UserPhone1 = lv_label_create(ui_User1);
     lv_obj_set_width(ui_UserPhone1, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_UserPhone1, LV_SIZE_CONTENT); /// 1
@@ -982,14 +975,6 @@ void ui_Screen5_screen_init(void)
     lv_label_set_text(ui_UserNum2, "01");
     lv_obj_set_style_text_color(ui_UserNum2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_UserName2 = lv_label_create(ui_User2);
-    lv_obj_set_width(ui_UserName2, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName2, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName2, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName2, "LWH");
-    lv_obj_set_style_text_color(ui_UserName2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_UserPhone2 = lv_label_create(ui_User2);
     lv_obj_set_width(ui_UserPhone2, LV_SIZE_CONTENT);  /// 1
@@ -1054,14 +1039,6 @@ void ui_Screen5_screen_init(void)
     lv_obj_set_style_text_color(ui_UserNum3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_UserName3 = lv_label_create(ui_User3);
-    lv_obj_set_width(ui_UserName3, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName3, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName3, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName3, "LWH");
-    lv_obj_set_style_text_color(ui_UserName3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_UserPhone3 = lv_label_create(ui_User3);
     lv_obj_set_width(ui_UserPhone3, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_UserPhone3, LV_SIZE_CONTENT); /// 1
@@ -1124,14 +1101,6 @@ void ui_Screen5_screen_init(void)
     lv_label_set_text(ui_UserNum4, "01");
     lv_obj_set_style_text_color(ui_UserNum4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_UserName4 = lv_label_create(ui_User4);
-    lv_obj_set_width(ui_UserName4, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName4, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName4, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName4, "LWH");
-    lv_obj_set_style_text_color(ui_UserName4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_UserPhone4 = lv_label_create(ui_User4);
     lv_obj_set_width(ui_UserPhone4, LV_SIZE_CONTENT);  /// 1
@@ -1196,14 +1165,6 @@ void ui_Screen5_screen_init(void)
     lv_obj_set_style_text_color(ui_UserNum5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_UserName5 = lv_label_create(ui_User5);
-    lv_obj_set_width(ui_UserName5, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName5, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName5, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName5, "LWH");
-    lv_obj_set_style_text_color(ui_UserName5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_UserPhone5 = lv_label_create(ui_User5);
     lv_obj_set_width(ui_UserPhone5, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_UserPhone5, LV_SIZE_CONTENT); /// 1
@@ -1266,14 +1227,6 @@ void ui_Screen5_screen_init(void)
     lv_label_set_text(ui_UserNum6, "01");
     lv_obj_set_style_text_color(ui_UserNum6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserNum6, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_UserName6 = lv_label_create(ui_User6);
-    lv_obj_set_width(ui_UserName6, LV_SIZE_CONTENT);  /// 1
-    lv_obj_set_height(ui_UserName6, LV_SIZE_CONTENT); /// 1
-    lv_obj_set_align(ui_UserName6, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_UserName6, "LWH");
-    lv_obj_set_style_text_color(ui_UserName6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_UserName6, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_UserPhone6 = lv_label_create(ui_User6);
     lv_obj_set_width(ui_UserPhone6, LV_SIZE_CONTENT);  /// 1
@@ -2274,6 +2227,9 @@ void ui_Screen5_screen_init(void)
 
     // 注册时间和日期标签到时间管理器
     ui_time_manager_register_labels(ui_Time1, ui_Date1);
+
+    // 更新用户管理显示
+    update_user_management_display();
 }
 
 void ui_Screen5_screen_destroy(void)
@@ -2472,4 +2428,65 @@ void ui_Screen5_screen_destroy(void)
     ui_OperaFunc8 = NULL;
     ui_Setting1 = NULL;
     ui_SettingText1 = NULL;
+}
+
+// 更新用户管理列表显示
+void update_user_management_display(void)
+{
+    int user_count = get_user_count();
+    char buffer[50];
+
+    // 更新注册用户数量显示
+    snprintf(buffer, sizeof(buffer), "%d", user_count);
+    if (ui_Label57)
+    {
+        lv_label_set_text(ui_Label57, buffer);
+    }
+
+    // 更新用户列表显示，从真实用户数据获取
+    if (user_count > 0)
+    {
+        user_info_t *user1 = get_user_by_index(0);
+        if (user1 && ui_UserNum1 && ui_UserPhone1 && ui_UserTime1 && ui_UserExpand1 && ui_UserBalance1)
+        {
+            // 更新第一个用户信息
+            snprintf(buffer, sizeof(buffer), "%02d", user1->id);
+            lv_label_set_text(ui_UserNum1, buffer);
+
+            lv_label_set_text(ui_UserPhone1, user1->phone);
+
+            snprintf(buffer, sizeof(buffer), "%d", user1->login_count);
+            lv_label_set_text(ui_UserTime1, buffer);
+
+            snprintf(buffer, sizeof(buffer), "%.0f$", user1->balance);
+            lv_label_set_text(ui_UserBalance1, buffer);
+
+            snprintf(buffer, sizeof(buffer), "%.0f$", user1->consumption);
+            lv_label_set_text(ui_UserExpand1, buffer);
+        }
+    }
+
+    if (user_count > 1)
+    {
+        user_info_t *user2 = get_user_by_index(1);
+        if (user2 && ui_UserNum2 && ui_UserPhone2 && ui_UserTime2 && ui_UserExpand2 && ui_UserBalance2)
+        {
+            // 更新第二个用户信息
+            snprintf(buffer, sizeof(buffer), "%02d", user2->id);
+            lv_label_set_text(ui_UserNum2, buffer);
+
+            lv_label_set_text(ui_UserPhone2, user2->phone);
+
+            snprintf(buffer, sizeof(buffer), "%d", user2->login_count);
+            lv_label_set_text(ui_UserTime2, buffer);
+
+            snprintf(buffer, sizeof(buffer), "%.0f$", user2->balance);
+            lv_label_set_text(ui_UserBalance2, buffer);
+
+            snprintf(buffer, sizeof(buffer), "%.0f$", user2->consumption);
+            lv_label_set_text(ui_UserExpand2, buffer);
+        }
+    }
+
+    printf("User management display updated with %d users\n", user_count);
 }
