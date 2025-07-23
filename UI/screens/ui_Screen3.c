@@ -336,6 +336,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_style_bg_color(ui_PasswordTx2, lv_color_hex(0x2A2A2A), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_PasswordTx2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_PasswordTx2, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_textarea_set_password_mode(ui_PasswordTx2, true);
 
     ui_LoginBtn1 = lv_button_create(ui_LoginOpera1);
     lv_obj_set_width(ui_LoginBtn1, 260);
