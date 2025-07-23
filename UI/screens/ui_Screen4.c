@@ -8,6 +8,28 @@
 #include <stdio.h>
 #include <string.h>
 
+// 充电管理相关变量
+static lv_timer_t *charging_timer = NULL;
+static int current_charge_percentage = 0;
+static bool is_charging = false;
+
+// 更新充电按钮外观的函数
+static void update_charge_button_appearance(void)
+{
+    if (is_charging)
+    {
+        // 充电中：红色背景，显示"Stop Charging"
+        lv_obj_set_style_bg_color(ui_StopChargeBtn, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_Label35, "Stop Charging");
+    }
+    else
+    {
+        // 未充电：蓝色背景，显示"Start Charging"
+        lv_obj_set_style_bg_color(ui_StopChargeBtn, lv_color_hex(0x00d4ff), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_Label35, "Start Charging");
+    }
+}
+
 lv_obj_t *ui_Screen4 = NULL;
 lv_obj_t *ui_Bg1 = NULL;
 lv_obj_t *ui_bg2 = NULL;
@@ -307,6 +329,77 @@ void ui_event_BatteryCapacity(lv_event_t *e)
     }
 }
 
+// 充电定时器回调函数
+static void charging_timer_cb(lv_timer_t *timer)
+{
+    if (is_charging && current_charge_percentage < 100)
+    {
+        current_charge_percentage++;
+
+        // 更新进度条
+        lv_bar_set_value(ui_CurrentCharging, current_charge_percentage, LV_ANIM_ON);
+
+        // 更新百分比文本
+        char percentage_text[8];
+        snprintf(percentage_text, sizeof(percentage_text), "%d%%", current_charge_percentage);
+        lv_label_set_text(ui_Label37, percentage_text);
+
+        printf("Charging progress: %d%%\n", current_charge_percentage);
+
+        // 充电完成时停止定时器
+        if (current_charge_percentage >= 100)
+        {
+            is_charging = false;
+            if (charging_timer)
+            {
+                lv_timer_del(charging_timer);
+                charging_timer = NULL;
+            }
+            // 更新按钮外观
+            update_charge_button_appearance();
+            printf("Charging completed!\n");
+        }
+    }
+}
+
+// ui_StopChargeBtn 事件处理函数
+void ui_event_StopChargeBtn(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        if (!is_charging)
+        {
+            // 开始充电
+            is_charging = true;
+            current_charge_percentage = lv_bar_get_value(ui_CurrentCharging);
+
+            printf("Starting charging from %d%%\n", current_charge_percentage);
+
+            // 创建定时器，每秒执行一次
+            if (charging_timer == NULL)
+            {
+                charging_timer = lv_timer_create(charging_timer_cb, 1000, NULL);
+            }
+        }
+        else
+        {
+            // 停止充电
+            is_charging = false;
+            if (charging_timer)
+            {
+                lv_timer_del(charging_timer);
+                charging_timer = NULL;
+            }
+            printf("Charging stopped at %d%%\n", current_charge_percentage);
+        }
+
+        // 更新按钮外观
+        update_charge_button_appearance();
+    }
+}
+
 void ui_event_Label37(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -419,6 +512,26 @@ void ui_event_OperaFunc1(lv_event_t *e)
         _ui_flag_modify(ui_ManagementInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_Account, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_PersonInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+        // 设置充电进度条范围并重置为0
+        lv_bar_set_range(ui_CurrentCharging, 0, 100);
+        lv_bar_set_value(ui_CurrentCharging, 0, LV_ANIM_OFF);
+        lv_label_set_text(ui_Label37, "0%");
+        current_charge_percentage = 0;
+
+        // 如果正在充电，停止充电
+        if (is_charging)
+        {
+            is_charging = false;
+            if (charging_timer)
+            {
+                lv_timer_del(charging_timer);
+                charging_timer = NULL;
+            }
+            update_charge_button_appearance();
+        }
+
+        printf("OperaFunc1 clicked: Reset charging to 0%% and set range to 0-100\n");
     }
 }
 
@@ -441,6 +554,26 @@ void ui_event_OperaFunc2(lv_event_t *e)
         _ui_flag_modify(ui_ManagementInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_Account, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_PersonInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+        // 设置充电进度条范围并重置为0
+        lv_bar_set_range(ui_CurrentCharging, 0, 100);
+        lv_bar_set_value(ui_CurrentCharging, 0, LV_ANIM_OFF);
+        lv_label_set_text(ui_Label37, "0%");
+        current_charge_percentage = 0;
+
+        // 如果正在充电，停止充电
+        if (is_charging)
+        {
+            is_charging = false;
+            if (charging_timer)
+            {
+                lv_timer_del(charging_timer);
+                charging_timer = NULL;
+            }
+            update_charge_button_appearance();
+        }
+
+        printf("OperaFunc2 clicked: Reset charging to 0%% and set range to 0-100\n");
     }
 }
 
@@ -485,6 +618,26 @@ void ui_event_OperaFunc4(lv_event_t *e)
         _ui_flag_modify(ui_ManagementInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_Account, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
         _ui_flag_modify(ui_PersonInfo, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+
+        // 设置充电进度条范围并重置为0
+        lv_bar_set_range(ui_CurrentCharging, 0, 100);
+        lv_bar_set_value(ui_CurrentCharging, 0, LV_ANIM_OFF);
+        lv_label_set_text(ui_Label37, "0%");
+        current_charge_percentage = 0;
+
+        // 如果正在充电，停止充电
+        if (is_charging)
+        {
+            is_charging = false;
+            if (charging_timer)
+            {
+                lv_timer_del(charging_timer);
+                charging_timer = NULL;
+            }
+            update_charge_button_appearance();
+        }
+
+        printf("OperaFunc4 clicked: Reset charging to 0%% and set range to 0-100\n");
     }
 }
 
@@ -1722,14 +1875,14 @@ void ui_Screen4_screen_init(void)
     lv_obj_add_flag(ui_StopChargeBtn, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
     lv_obj_remove_flag(ui_StopChargeBtn, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_radius(ui_StopChargeBtn, 5, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_StopChargeBtn, lv_color_hex(0xE34444), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_StopChargeBtn, lv_color_hex(0x00d4ff), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_StopChargeBtn, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label35 = lv_label_create(ui_StopChargeBtn);
     lv_obj_set_width(ui_Label35, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_Label35, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_Label35, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Label35, "Stop Charging");
+    lv_label_set_text(ui_Label35, "Start Charging");
     lv_obj_set_style_text_font(ui_Label35, &lv_font_montserrat_16, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Label36 = lv_label_create(ui_ChargeInfo);
@@ -1749,13 +1902,14 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_x(ui_Label37, 0);
     lv_obj_set_y(ui_Label37, 55);
     lv_obj_set_align(ui_Label37, LV_ALIGN_RIGHT_MID);
-    lv_label_set_text(ui_Label37, "80%");
+    lv_label_set_text(ui_Label37, "0%");
     lv_obj_set_style_text_color(ui_Label37, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label37, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label37, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_CurrentCharging = lv_bar_create(ui_ChargeInfo);
-    lv_bar_set_value(ui_CurrentCharging, 80, LV_ANIM_OFF);
+    lv_bar_set_range(ui_CurrentCharging, 0, 100);
+    lv_bar_set_value(ui_CurrentCharging, 0, LV_ANIM_OFF);
     lv_bar_set_start_value(ui_CurrentCharging, 0, LV_ANIM_OFF);
     lv_obj_set_width(ui_CurrentCharging, 550);
     lv_obj_set_height(ui_CurrentCharging, 10);
@@ -2313,6 +2467,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_add_event_cb(ui_LocationInfo9, ui_event_LocationInfo9, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_BatteryCapacity, ui_event_BatteryCapacity, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label37, ui_event_Label37, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_StopChargeBtn, ui_event_StopChargeBtn, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Edit, ui_event_Edit, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Button3, ui_event_Button3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ChangeBtn, ui_event_ChangeBtn, LV_EVENT_ALL, NULL);
