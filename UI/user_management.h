@@ -47,5 +47,6 @@ int get_user_count(void);
 bool is_phone_exists(const char *phone);
 void init_admin_user(void);
 bool recharge_user_balance(float amount);
+bool deduct_user_balance(float amount);
 
 #endif // USER_MANAGEMENT_H

@@ -14,6 +14,11 @@ static lv_timer_t *charging_timer = NULL;
 static int current_charge_percentage = 0;
 static bool is_charging = false;
 
+// 完善充电功能的新变量
+static int charging_time_seconds = 0; // 充电时间（秒）
+static float vehicle_battery = 0.0f;  // 车辆电量（0-6000）
+static float charging_cost = 0.0f;    // 充电费用
+
 // 更新充电按钮外观的函数
 static void update_charge_button_appearance(void)
 {
@@ -335,9 +340,11 @@ static void charging_timer_cb(lv_timer_t *timer)
 {
     if (is_charging && current_charge_percentage < 100)
     {
-        current_charge_percentage++;
+        // 更新充电时间
+        charging_time_seconds++;
 
-        // 更新进度条
+        // 更新进度条百分比
+        current_charge_percentage++;
         lv_bar_set_value(ui_CurrentCharging, current_charge_percentage, LV_ANIM_ON);
 
         // 更新百分比文本
@@ -345,7 +352,51 @@ static void charging_timer_cb(lv_timer_t *timer)
         snprintf(percentage_text, sizeof(percentage_text), "%d%%", current_charge_percentage);
         lv_label_set_text(ui_Label37, percentage_text);
 
-        printf("Charging progress: %d%%\n", current_charge_percentage);
+        // 更新充电时间显示（ui_Label27）
+        int hours = charging_time_seconds / 3600;
+        int minutes = (charging_time_seconds % 3600) / 60;
+        int seconds = charging_time_seconds % 60;
+        char time_text[16];
+        snprintf(time_text, sizeof(time_text), "%d:%02d:%02d", hours, minutes, seconds);
+        lv_label_set_text(ui_Label27, time_text);
+
+        // 更新车辆电量（ui_Label31）- 电量0-6000，与百分比等比例
+        vehicle_battery = (current_charge_percentage / 100.0f) * 6000.0f;
+        char battery_text[16];
+        snprintf(battery_text, sizeof(battery_text), "%.1f", vehicle_battery);
+        lv_label_set_text(ui_Label31, battery_text);
+
+        // 更新充电费用（每秒1.5元）
+        charging_cost += 1.5f;
+
+        // 扣除用户余额
+        user_info_t *current_user = get_current_user();
+        if (current_user != NULL)
+        {
+            if (deduct_user_balance(1.5f))
+            {
+                // 更新客户余额显示（ui_Label33）
+                char balance_text[16];
+                snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+                lv_label_set_text(ui_Label33, balance_text);
+            }
+            else
+            {
+                // 余额不足，停止充电
+                printf("余额不足，自动停止充电\n");
+                is_charging = false;
+                if (charging_timer)
+                {
+                    lv_timer_del(charging_timer);
+                    charging_timer = NULL;
+                }
+                update_charge_button_appearance();
+                return;
+            }
+        }
+
+        printf("充电进度: %d%%, 时间: %s, 电量: %.1f, 费用: $%.2f\n",
+               current_charge_percentage, time_text, vehicle_battery, charging_cost);
 
         // 充电完成时停止定时器
         if (current_charge_percentage >= 100)
@@ -358,7 +409,7 @@ static void charging_timer_cb(lv_timer_t *timer)
             }
             // 更新按钮外观
             update_charge_button_appearance();
-            printf("Charging completed!\n");
+            printf("充电完成！总时间: %s, 总费用: $%.2f\n", time_text, charging_cost);
         }
     }
 }
@@ -372,11 +423,41 @@ void ui_event_StopChargeBtn(lv_event_t *e)
     {
         if (!is_charging)
         {
+            // 检查用户是否登录
+            user_info_t *current_user = get_current_user();
+            if (current_user == NULL)
+            {
+                printf("充电失败：请先登录\n");
+                return;
+            }
+
+            // 检查用户余额是否足够（至少需要1.5元）
+            if (current_user->balance < 1.5f)
+            {
+                printf("充电失败：余额不足，当前余额 $%.2f\n", current_user->balance);
+                return;
+            }
+
             // 开始充电
             is_charging = true;
             current_charge_percentage = lv_bar_get_value(ui_CurrentCharging);
 
-            printf("Starting charging from %d%%\n", current_charge_percentage);
+            // 初始化充电参数
+            charging_time_seconds = 0;
+            charging_cost = 0.0f;
+            vehicle_battery = (current_charge_percentage / 100.0f) * 6000.0f;
+
+            // 初始化显示
+            lv_label_set_text(ui_Label27, "0:00:00");
+            char battery_text[16];
+            snprintf(battery_text, sizeof(battery_text), "%.1f", vehicle_battery);
+            lv_label_set_text(ui_Label31, battery_text);
+            char balance_text[16];
+            snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+            lv_label_set_text(ui_Label33, balance_text);
+
+            printf("开始充电，起始电量: %d%%, 车辆电池: %.1f, 用户余额: $%.2f\n",
+                   current_charge_percentage, vehicle_battery, current_user->balance);
 
             // 创建定时器，每秒执行一次
             if (charging_timer == NULL)
@@ -393,7 +474,8 @@ void ui_event_StopChargeBtn(lv_event_t *e)
                 lv_timer_del(charging_timer);
                 charging_timer = NULL;
             }
-            printf("Charging stopped at %d%%\n", current_charge_percentage);
+            printf("充电停止，最终电量: %d%%, 总费用: $%.2f, 总时间: %d秒\n",
+                   current_charge_percentage, charging_cost, charging_time_seconds);
         }
 
         // 更新按钮外观
@@ -566,6 +648,26 @@ void ui_event_OperaFunc1(lv_event_t *e)
             update_charge_button_appearance();
         }
 
+        // 重置充电相关显示
+        charging_time_seconds = 0;
+        vehicle_battery = 0.0f;
+        charging_cost = 0.0f;
+        lv_label_set_text(ui_Label27, "0:00:00"); // 充电时间
+        lv_label_set_text(ui_Label31, "0.0");     // 车辆电量
+
+        // 更新客户余额显示
+        user_info_t *current_user = get_current_user();
+        if (current_user != NULL)
+        {
+            char balance_text[16];
+            snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+            lv_label_set_text(ui_Label33, balance_text);
+        }
+        else
+        {
+            lv_label_set_text(ui_Label33, "$0.00");
+        }
+
         printf("OperaFunc1 clicked: Reset charging to 0%% and set range to 0-100\n");
     }
 }
@@ -606,6 +708,26 @@ void ui_event_OperaFunc2(lv_event_t *e)
                 charging_timer = NULL;
             }
             update_charge_button_appearance();
+        }
+
+        // 重置充电相关显示
+        charging_time_seconds = 0;
+        vehicle_battery = 0.0f;
+        charging_cost = 0.0f;
+        lv_label_set_text(ui_Label27, "0:00:00"); // 充电时间
+        lv_label_set_text(ui_Label31, "0.0");     // 车辆电量
+
+        // 更新客户余额显示
+        user_info_t *current_user = get_current_user();
+        if (current_user != NULL)
+        {
+            char balance_text[16];
+            snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+            lv_label_set_text(ui_Label33, balance_text);
+        }
+        else
+        {
+            lv_label_set_text(ui_Label33, "$0.00");
         }
 
         printf("OperaFunc2 clicked: Reset charging to 0%% and set range to 0-100\n");
@@ -670,6 +792,26 @@ void ui_event_OperaFunc4(lv_event_t *e)
                 charging_timer = NULL;
             }
             update_charge_button_appearance();
+        }
+
+        // 重置充电相关显示
+        charging_time_seconds = 0;
+        vehicle_battery = 0.0f;
+        charging_cost = 0.0f;
+        lv_label_set_text(ui_Label27, "0:00:00"); // 充电时间
+        lv_label_set_text(ui_Label31, "0.0");     // 车辆电量
+
+        // 更新客户余额显示
+        user_info_t *current_user = get_current_user();
+        if (current_user != NULL)
+        {
+            char balance_text[16];
+            snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
+            lv_label_set_text(ui_Label33, balance_text);
+        }
+        else
+        {
+            lv_label_set_text(ui_Label33, "$0.00");
         }
 
         printf("OperaFunc4 clicked: Reset charging to 0%% and set range to 0-100\n");
@@ -2526,13 +2668,26 @@ void ui_Screen4_screen_init(void)
         char balance_text[32];
         snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
         lv_label_set_text(ui_Label39, balance_text);
+
+        // 初始化充电相关显示
+        lv_label_set_text(ui_Label33, balance_text); // 客户余额
         printf("Screen4 初始化：显示用户余额 %s\n", balance_text);
     }
     else
     {
         lv_label_set_text(ui_Label39, "$0.00");
+        lv_label_set_text(ui_Label33, "$0.00"); // 客户余额
         printf("Screen4 初始化：没有当前用户，显示默认余额\n");
     }
+
+    // 初始化充电显示
+    lv_label_set_text(ui_Label27, "0:00:00"); // 充电时间
+    lv_label_set_text(ui_Label31, "0.0");     // 车辆电量
+
+    // 初始化充电变量
+    charging_time_seconds = 0;
+    vehicle_battery = 0.0f;
+    charging_cost = 0.0f;
 }
 
 void ui_Screen4_screen_destroy(void)

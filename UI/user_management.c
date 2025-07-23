@@ -264,3 +264,45 @@ bool recharge_user_balance(float amount)
         return false;
     }
 }
+
+// 用户扣费功能
+bool deduct_user_balance(float amount)
+{
+    if (g_user_manager.current_user == NULL)
+    {
+        printf("扣费失败：没有当前登录用户\n");
+        return false;
+    }
+
+    if (amount <= 0)
+    {
+        printf("扣费失败：扣费金额必须大于0\n");
+        return false;
+    }
+
+    if (g_user_manager.current_user->balance < amount)
+    {
+        printf("扣费失败：余额不足，当前余额 $%.2f，需要扣费 $%.2f\n",
+               g_user_manager.current_user->balance, amount);
+        return false;
+    }
+
+    // 扣除用户余额
+    g_user_manager.current_user->balance -= amount;
+
+    printf("扣费成功：用户 %s 扣费 $%.2f，当前余额 $%.2f\n",
+           g_user_manager.current_user->phone, amount,
+           g_user_manager.current_user->balance);
+
+    // 保存到文件
+    if (save_users_to_file())
+    {
+        printf("用户数据已保存到文件\n");
+        return true;
+    }
+    else
+    {
+        printf("警告：扣费成功但保存文件失败\n");
+        return false;
+    }
+}
