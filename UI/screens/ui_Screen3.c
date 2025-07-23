@@ -5,79 +5,98 @@
 
 #include "../ui.h"
 
-lv_obj_t * ui_Screen3 = NULL;
-lv_obj_t * ui_UserLoginSlider1 = NULL;
-lv_obj_t * ui_BackIndex1 = NULL;
-lv_obj_t * ui_BackIndexText1 = NULL;
-lv_obj_t * ui_UserText1 = NULL;
-lv_obj_t * ui_UserInfo1 = NULL;
-lv_obj_t * ui_Info12 = NULL;
-lv_obj_t * ui_Info14 = NULL;
-lv_obj_t * ui_Info15 = NULL;
-lv_obj_t * ui_Info16 = NULL;
-lv_obj_t * ui_Image14 = NULL;
-lv_obj_t * ui_Image15 = NULL;
-lv_obj_t * ui_Image16 = NULL;
-lv_obj_t * ui_Image17 = NULL;
-lv_obj_t * ui_Image18 = NULL;
-lv_obj_t * ui_AdminLogo2 = NULL;
-lv_obj_t * ui_LogoImage3 = NULL;
-lv_obj_t * ui_UserLogin1 = NULL;
-lv_obj_t * ui_LoginOpera1 = NULL;
-lv_obj_t * ui_Logo1 = NULL;
-lv_obj_t * ui_Lightning1 = NULL;
-lv_obj_t * ui_LoginArea1 = NULL;
-lv_obj_t * ui_PhoneText3 = NULL;
-lv_obj_t * ui_PhoneTx3 = NULL;
-lv_obj_t * ui_PasswordText2 = NULL;
-lv_obj_t * ui_PasswordTx2 = NULL;
-lv_obj_t * ui_LoginBtn1 = NULL;
-lv_obj_t * ui_LoginBtnText1 = NULL;
-lv_obj_t * ui_Keyboard2 = NULL;
+lv_obj_t *ui_Screen3 = NULL;
+lv_obj_t *ui_UserLoginSlider1 = NULL;
+lv_obj_t *ui_BackIndex1 = NULL;
+lv_obj_t *ui_BackIndexText1 = NULL;
+lv_obj_t *ui_UserText1 = NULL;
+lv_obj_t *ui_UserInfo1 = NULL;
+lv_obj_t *ui_Info12 = NULL;
+lv_obj_t *ui_Info14 = NULL;
+lv_obj_t *ui_Info15 = NULL;
+lv_obj_t *ui_Info16 = NULL;
+lv_obj_t *ui_Image14 = NULL;
+lv_obj_t *ui_Image15 = NULL;
+lv_obj_t *ui_Image16 = NULL;
+lv_obj_t *ui_Image17 = NULL;
+lv_obj_t *ui_Image18 = NULL;
+lv_obj_t *ui_AdminLogo2 = NULL;
+lv_obj_t *ui_LogoImage3 = NULL;
+lv_obj_t *ui_UserLogin1 = NULL;
+lv_obj_t *ui_LoginOpera1 = NULL;
+lv_obj_t *ui_Logo1 = NULL;
+lv_obj_t *ui_Lightning1 = NULL;
+lv_obj_t *ui_LoginArea1 = NULL;
+lv_obj_t *ui_PhoneText3 = NULL;
+lv_obj_t *ui_PhoneTx3 = NULL;
+lv_obj_t *ui_PasswordText2 = NULL;
+lv_obj_t *ui_PasswordTx2 = NULL;
+lv_obj_t *ui_LoginBtn1 = NULL;
+lv_obj_t *ui_LoginBtnText1 = NULL;
+lv_obj_t *ui_Keyboard2 = NULL;
 // event funtions
-void ui_event_BackIndex1(lv_event_t * e)
+void ui_event_BackIndex1(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         _ui_screen_change(&ui_Screen1, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen1_screen_init);
     }
 }
 
-void ui_event_PhoneTx3(lv_event_t * e)
+void ui_event_PhoneTx3(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_keyboard_set_target(ui_Keyboard2,  ui_PhoneTx3);
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        _ui_keyboard_set_target(ui_Keyboard2, ui_PhoneTx3);
     }
-    if(event_code == LV_EVENT_DEFOCUSED) {
+    if (event_code == LV_EVENT_DEFOCUSED)
+    {
         _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
 }
 
-void ui_event_PasswordTx2(lv_event_t * e)
+void ui_event_PasswordTx2(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
-        _ui_keyboard_set_target(ui_Keyboard2,  ui_PasswordTx2);
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        _ui_keyboard_set_target(ui_Keyboard2, ui_PasswordTx2);
         _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
     }
-    if(event_code == LV_EVENT_DEFOCUSED) {
+    if (event_code == LV_EVENT_DEFOCUSED)
+    {
         _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_ADD);
     }
 }
 
-void ui_event_LoginBtn1(lv_event_t * e)
+void ui_event_LoginBtn1(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
 
-    if(event_code == LV_EVENT_CLICKED) {
+    if (event_code == LV_EVENT_CLICKED)
+    {
         _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen5_screen_init);
+    }
+}
+
+// my event
+void ClearText1(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        lv_textarea_set_text(ui_PhoneTx3, "");
+        lv_textarea_set_text(ui_PasswordTx2, "");
     }
 }
 
@@ -86,13 +105,13 @@ void ui_event_LoginBtn1(lv_event_t * e)
 void ui_Screen3_screen_init(void)
 {
     ui_Screen3 = lv_obj_create(NULL);
-    lv_obj_remove_flag(ui_Screen3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Screen3, LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_UserLoginSlider1 = lv_obj_create(ui_Screen3);
     lv_obj_set_width(ui_UserLoginSlider1, 300);
     lv_obj_set_height(ui_UserLoginSlider1, 480);
     lv_obj_set_align(ui_UserLoginSlider1, LV_ALIGN_LEFT_MID);
-    lv_obj_remove_flag(ui_UserLoginSlider1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_UserLoginSlider1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_radius(ui_UserLoginSlider1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_UserLoginSlider1, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_UserLoginSlider1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -101,20 +120,21 @@ void ui_Screen3_screen_init(void)
     ui_BackIndex1 = lv_button_create(ui_UserLoginSlider1);
     lv_obj_set_width(ui_BackIndex1, 80);
     lv_obj_set_height(ui_BackIndex1, 40);
-    lv_obj_add_flag(ui_BackIndex1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_remove_flag(ui_BackIndex1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_flag(ui_BackIndex1, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_remove_flag(ui_BackIndex1, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_bg_color(ui_BackIndex1, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_BackIndex1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_event_cb(ui_BackIndex1, ClearText1, LV_EVENT_ALL, NULL);
 
     ui_BackIndexText1 = lv_label_create(ui_BackIndex1);
-    lv_obj_set_width(ui_BackIndexText1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_BackIndexText1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_BackIndexText1, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_BackIndexText1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_BackIndexText1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_BackIndexText1, "Back");
 
     ui_UserText1 = lv_label_create(ui_UserLoginSlider1);
-    lv_obj_set_width(ui_UserText1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_UserText1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_UserText1, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_UserText1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_UserText1, 0);
     lv_obj_set_y(ui_UserText1, 150);
     lv_obj_set_align(ui_UserText1, LV_ALIGN_TOP_MID);
@@ -127,11 +147,11 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_width(ui_UserInfo1, 200);
     lv_obj_set_height(ui_UserInfo1, 100);
     lv_obj_set_align(ui_UserInfo1, LV_ALIGN_CENTER);
-    lv_obj_remove_flag(ui_UserInfo1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_UserInfo1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_Info12 = lv_label_create(ui_UserInfo1);
-    lv_obj_set_width(ui_Info12, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Info12, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Info12, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Info12, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Info12, 28);
     lv_obj_set_y(ui_Info12, 7);
     lv_label_set_text(ui_Info12, "station map");
@@ -139,8 +159,8 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_style_text_opa(ui_Info12, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Info14 = lv_label_create(ui_UserInfo1);
-    lv_obj_set_width(ui_Info14, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Info14, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Info14, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Info14, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Info14, 28);
     lv_obj_set_y(ui_Info14, 47);
     lv_label_set_text(ui_Info14, "Make an appointment");
@@ -148,8 +168,8 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_style_text_opa(ui_Info14, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Info15 = lv_label_create(ui_UserInfo1);
-    lv_obj_set_width(ui_Info15, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Info15, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Info15, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Info15, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Info15, 26);
     lv_obj_set_y(ui_Info15, 27);
     lv_label_set_text(ui_Info15, "Scan the code");
@@ -157,8 +177,8 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_style_text_opa(ui_Info15, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Info16 = lv_label_create(ui_UserInfo1);
-    lv_obj_set_width(ui_Info16, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Info16, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Info16, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Info16, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Info16, 28);
     lv_obj_set_y(ui_Info16, 67);
     lv_label_set_text(ui_Info16, "registration\n");
@@ -167,51 +187,51 @@ void ui_Screen3_screen_init(void)
 
     ui_Image14 = lv_image_create(ui_UserInfo1);
     lv_image_set_src(ui_Image14, &ui_img_dot_png);
-    lv_obj_set_width(ui_Image14, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Image14, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Image14, LV_SIZE_CONTENT);          /// 1
+    lv_obj_set_height(ui_Image14, LV_SIZE_CONTENT);         /// 1
     lv_obj_add_flag(ui_Image14, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image14, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Image14, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_image_set_scale(ui_Image14, 180);
 
     ui_Image15 = lv_image_create(ui_UserInfo1);
     lv_image_set_src(ui_Image15, &ui_img_dot_png);
-    lv_obj_set_width(ui_Image15, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Image15, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Image15, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Image15, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Image15, 0);
     lv_obj_set_y(ui_Image15, 60);
     lv_obj_add_flag(ui_Image15, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image15, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Image15, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_image_set_scale(ui_Image15, 180);
 
     ui_Image16 = lv_image_create(ui_UserInfo1);
     lv_image_set_src(ui_Image16, &ui_img_dot_png);
-    lv_obj_set_width(ui_Image16, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Image16, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Image16, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Image16, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Image16, 0);
     lv_obj_set_y(ui_Image16, 40);
     lv_obj_add_flag(ui_Image16, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image16, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Image16, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_image_set_scale(ui_Image16, 180);
 
     ui_Image17 = lv_image_create(ui_UserInfo1);
     lv_image_set_src(ui_Image17, &ui_img_dot_png);
-    lv_obj_set_width(ui_Image17, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Image17, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Image17, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Image17, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Image17, 0);
     lv_obj_set_y(ui_Image17, 20);
     lv_obj_add_flag(ui_Image17, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image17, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Image17, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_image_set_scale(ui_Image17, 180);
 
     ui_Image18 = lv_image_create(ui_UserLoginSlider1);
     lv_image_set_src(ui_Image18, &ui_img_lixiang_png);
-    lv_obj_set_width(ui_Image18, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Image18, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Image18, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Image18, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_Image18, 0);
     lv_obj_set_y(ui_Image18, -26);
     lv_obj_set_align(ui_Image18, LV_ALIGN_BOTTOM_MID);
     lv_obj_add_flag(ui_Image18, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Image18, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Image18, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_image_set_scale(ui_Image18, 300);
 
     ui_AdminLogo2 = lv_obj_create(ui_UserLoginSlider1);
@@ -221,7 +241,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_x(ui_AdminLogo2, 0);
     lv_obj_set_y(ui_AdminLogo2, 80);
     lv_obj_set_align(ui_AdminLogo2, LV_ALIGN_TOP_MID);
-    lv_obj_remove_flag(ui_AdminLogo2, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_AdminLogo2, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_radius(ui_AdminLogo2, 15, LV_PART_MAIN | LV_STATE_DEFAULT);
     ui_object_set_themeable_style_property(ui_AdminLogo2, LV_PART_MAIN | LV_STATE_DEFAULT, LV_STYLE_BG_COLOR,
                                            _ui_theme_color_Admin3);
@@ -233,17 +253,17 @@ void ui_Screen3_screen_init(void)
 
     ui_LogoImage3 = lv_image_create(ui_AdminLogo2);
     lv_image_set_src(ui_LogoImage3, &ui_img_admin_png);
-    lv_obj_set_width(ui_LogoImage3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_LogoImage3, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_LogoImage3, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_LogoImage3, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_LogoImage3, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_LogoImage3, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_LogoImage3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_LogoImage3, LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_UserLogin1 = lv_obj_create(ui_Screen3);
     lv_obj_set_width(ui_UserLogin1, 500);
     lv_obj_set_height(ui_UserLogin1, 480);
     lv_obj_set_align(ui_UserLogin1, LV_ALIGN_RIGHT_MID);
-    lv_obj_remove_flag(ui_UserLogin1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_UserLogin1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_radius(ui_UserLogin1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_UserLogin1, lv_color_hex(0x0A0A0A), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_UserLogin1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -255,7 +275,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_x(ui_LoginOpera1, 0);
     lv_obj_set_y(ui_LoginOpera1, 30);
     lv_obj_set_align(ui_LoginOpera1, LV_ALIGN_CENTER);
-    lv_obj_remove_flag(ui_LoginOpera1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_LoginOpera1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_LoginOpera1, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_LoginOpera1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_LoginOpera1, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -265,7 +285,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_width(ui_Logo1, 70);
     lv_obj_set_height(ui_Logo1, 70);
     lv_obj_set_align(ui_Logo1, LV_ALIGN_TOP_MID);
-    lv_obj_remove_flag(ui_Logo1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Logo1, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_radius(ui_Logo1, 20, LV_PART_MAIN | LV_STATE_DEFAULT);
     ui_object_set_themeable_style_property(ui_Logo1, LV_PART_MAIN | LV_STATE_DEFAULT, LV_STYLE_BG_COLOR,
                                            _ui_theme_color_Admin2);
@@ -276,11 +296,11 @@ void ui_Screen3_screen_init(void)
 
     ui_Lightning1 = lv_image_create(ui_Logo1);
     lv_image_set_src(ui_Lightning1, &ui_img_lightning_png);
-    lv_obj_set_width(ui_Lightning1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Lightning1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Lightning1, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_Lightning1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_Lightning1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Lightning1, LV_OBJ_FLAG_CLICKABLE);     /// Flags
-    lv_obj_remove_flag(ui_Lightning1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_Lightning1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
 
     ui_LoginArea1 = lv_obj_create(ui_LoginOpera1);
     lv_obj_set_width(ui_LoginArea1, 290);
@@ -288,14 +308,14 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_x(ui_LoginArea1, 0);
     lv_obj_set_y(ui_LoginArea1, -100);
     lv_obj_set_align(ui_LoginArea1, LV_ALIGN_BOTTOM_MID);
-    lv_obj_remove_flag(ui_LoginArea1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_LoginArea1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_LoginArea1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_LoginArea1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_LoginArea1, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PhoneText3 = lv_label_create(ui_LoginArea1);
-    lv_obj_set_width(ui_PhoneText3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_PhoneText3, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_PhoneText3, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_PhoneText3, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PhoneText3, 5);
     lv_obj_set_y(ui_PhoneText3, 0);
     lv_label_set_text(ui_PhoneText3, "Phone");
@@ -307,7 +327,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_height(ui_PhoneTx3, 35);
     lv_obj_set_x(ui_PhoneTx3, 0);
     lv_obj_set_y(ui_PhoneTx3, 22);
-    lv_obj_remove_flag(ui_PhoneTx3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_PhoneTx3, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_text_color(ui_PhoneTx3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PhoneTx3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_radius(ui_PhoneTx3, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -316,8 +336,8 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_style_border_side(ui_PhoneTx3, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_PasswordText2 = lv_label_create(ui_LoginArea1);
-    lv_obj_set_width(ui_PasswordText2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_PasswordText2, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_PasswordText2, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_PasswordText2, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PasswordText2, 5);
     lv_obj_set_y(ui_PasswordText2, 60);
     lv_label_set_text(ui_PasswordText2, "PassWord");
@@ -329,7 +349,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_height(ui_PasswordTx2, 35);
     lv_obj_set_x(ui_PasswordTx2, 0);
     lv_obj_set_y(ui_PasswordTx2, 82);
-    lv_obj_remove_flag(ui_PasswordTx2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_remove_flag(ui_PasswordTx2, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_text_color(ui_PasswordTx2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PasswordTx2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_radius(ui_PasswordTx2, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -344,14 +364,15 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_x(ui_LoginBtn1, 5);
     lv_obj_set_y(ui_LoginBtn1, -50);
     lv_obj_set_align(ui_LoginBtn1, LV_ALIGN_BOTTOM_MID);
-    lv_obj_add_flag(ui_LoginBtn1, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_remove_flag(ui_LoginBtn1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_add_flag(ui_LoginBtn1, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_remove_flag(ui_LoginBtn1, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_bg_color(ui_LoginBtn1, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_LoginBtn1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_event_cb(ui_LoginBtn1, ClearText1, LV_EVENT_ALL, NULL);
 
     ui_LoginBtnText1 = lv_label_create(ui_LoginBtn1);
-    lv_obj_set_width(ui_LoginBtnText1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_LoginBtnText1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_LoginBtnText1, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_LoginBtnText1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_LoginBtnText1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_LoginBtnText1, "Login");
     lv_obj_set_style_text_font(ui_LoginBtnText1, &lv_font_montserrat_18, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -362,7 +383,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_x(ui_Keyboard2, 0);
     lv_obj_set_y(ui_Keyboard2, 15);
     lv_obj_set_align(ui_Keyboard2, LV_ALIGN_BOTTOM_MID);
-    lv_obj_add_flag(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN);     /// Flags
+    lv_obj_add_flag(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN); /// Flags
     lv_obj_set_style_radius(ui_Keyboard2, 10, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_color(ui_Keyboard2, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Keyboard2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -386,12 +407,12 @@ void ui_Screen3_screen_init(void)
     lv_obj_add_event_cb(ui_PasswordTx2, ui_event_PasswordTx2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_LoginBtn1, ui_event_LoginBtn1, LV_EVENT_ALL, NULL);
     lv_keyboard_set_textarea(ui_Keyboard2, ui_PhoneTx1);
-
 }
 
 void ui_Screen3_screen_destroy(void)
 {
-    if(ui_Screen3) lv_obj_del(ui_Screen3);
+    if (ui_Screen3)
+        lv_obj_del(ui_Screen3);
 
     // NULL screen variables
     ui_Screen3 = NULL;
@@ -423,5 +444,4 @@ void ui_Screen3_screen_destroy(void)
     ui_LoginBtn1 = NULL;
     ui_LoginBtnText1 = NULL;
     ui_Keyboard2 = NULL;
-
 }
