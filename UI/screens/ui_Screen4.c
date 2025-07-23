@@ -213,6 +213,8 @@ lv_obj_t *ui_Image26 = NULL;
 lv_obj_t *ui_Label39 = NULL;
 lv_obj_t *ui_Button2 = NULL;
 lv_obj_t *ui_Label40 = NULL;
+lv_obj_t *ui_ButtonFlash = NULL;
+lv_obj_t *ui_LabelFlash = NULL;
 lv_obj_t *ui_QRCharge = NULL;
 lv_obj_t *ui_ManagementInfo = NULL;
 lv_obj_t *ui_Edit = NULL;
@@ -603,6 +605,15 @@ void ui_event_Button2(lv_event_t *e)
             printf("充值失败\n");
         }
     }
+}
+
+void ui_event_ButtonFlash(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+    user_info_t *current_user = get_current_user();
+    // 使用同步函数更新UI显示
+    if (event_code == LV_EVENT_CLICKED)
+        sync_user_balance_display();
 }
 
 void ui_event_ChangeBtn(lv_event_t *e)
@@ -2163,6 +2174,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_y(ui_Label39, 100);
     lv_obj_set_align(ui_Label39, LV_ALIGN_CENTER);
     // 余额文本将通过 sync_user_balance_display() 设置
+    sync_user_balance_display();
     lv_obj_set_style_text_color(ui_Label39, lv_color_hex(0x02FF88), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Label39, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Label39, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -2170,6 +2182,7 @@ void ui_Screen4_screen_init(void)
     ui_Button2 = lv_button_create(ui_Account);
     lv_obj_set_width(ui_Button2, 80);
     lv_obj_set_height(ui_Button2, 40);
+    lv_obj_set_x(ui_Button2, -60);
     lv_obj_set_align(ui_Button2, LV_ALIGN_BOTTOM_MID);
     lv_obj_add_flag(ui_Button2, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
     lv_obj_remove_flag(ui_Button2, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
@@ -2182,6 +2195,24 @@ void ui_Screen4_screen_init(void)
     lv_obj_set_align(ui_Label40, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Label40, "Recharge");
     lv_obj_set_style_text_font(ui_Label40, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_ButtonFlash = lv_button_create(ui_Account);
+    lv_obj_set_width(ui_ButtonFlash, 80);
+    lv_obj_set_height(ui_ButtonFlash, 40);
+    lv_obj_set_x(ui_ButtonFlash, 60);
+    lv_obj_set_align(ui_ButtonFlash, LV_ALIGN_BOTTOM_MID);
+    lv_obj_add_flag(ui_ButtonFlash, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
+    lv_obj_remove_flag(ui_ButtonFlash, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
+    lv_obj_set_style_bg_color(ui_ButtonFlash, lv_color_hex(0x0A0A0A), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_ButtonFlash, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_event_cb(ui_ButtonFlash, ui_event_ButtonFlash, LV_EVENT_ALL, NULL);
+
+    ui_LabelFlash = lv_label_create(ui_ButtonFlash);
+    lv_obj_set_width(ui_LabelFlash, LV_SIZE_CONTENT);  /// 1
+    lv_obj_set_height(ui_LabelFlash, LV_SIZE_CONTENT); /// 1
+    lv_obj_set_align(ui_LabelFlash, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_LabelFlash, "Flash");
+    lv_obj_set_style_text_font(ui_LabelFlash, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_QRCharge = lv_image_create(ui_Account);
     lv_image_set_src(ui_QRCharge, &ui_img_qrbanana_png);
