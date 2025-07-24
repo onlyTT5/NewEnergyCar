@@ -370,7 +370,7 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_width(ui_LoginOpera, 400);
     lv_obj_set_height(ui_LoginOpera, 360);
     lv_obj_set_x(ui_LoginOpera, 0);
-    lv_obj_set_y(ui_LoginOpera, 30);
+    lv_obj_set_y(ui_LoginOpera, 0);
     lv_obj_set_align(ui_LoginOpera, LV_ALIGN_TOP_MID);
     lv_obj_remove_flag(ui_LoginOpera, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_LoginOpera, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -576,7 +576,7 @@ void ui_Screen2_screen_init(void)
 
     ui_RegisterSelect = lv_obj_create(ui_RegisterOpera);
     lv_obj_set_width(ui_RegisterSelect, 300);
-    lv_obj_set_height(ui_RegisterSelect, 30);
+    lv_obj_set_height(ui_RegisterSelect, 40);
     lv_obj_set_x(ui_RegisterSelect, 0);
     lv_obj_set_y(ui_RegisterSelect, 80);
     lv_obj_set_align(ui_RegisterSelect, LV_ALIGN_TOP_MID);
@@ -587,7 +587,7 @@ void ui_Screen2_screen_init(void)
 
     ui_Register1 = lv_obj_create(ui_RegisterSelect);
     lv_obj_set_width(ui_Register1, 100);
-    lv_obj_set_height(ui_Register1, 30);
+    lv_obj_set_height(ui_Register1, 40);
     lv_obj_set_align(ui_Register1, LV_ALIGN_RIGHT_MID);
     lv_obj_add_flag(ui_Register1, LV_OBJ_FLAG_EVENT_BUBBLE);                           /// Flags
     lv_obj_remove_flag(ui_Register1, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_SCROLLABLE); /// Flags
@@ -603,7 +603,7 @@ void ui_Screen2_screen_init(void)
 
     ui_Login1 = lv_obj_create(ui_RegisterSelect);
     lv_obj_set_width(ui_Login1, 100);
-    lv_obj_set_height(ui_Login1, 30);
+    lv_obj_set_height(ui_Login1, 40);
     lv_obj_set_align(ui_Login1, LV_ALIGN_LEFT_MID);
     lv_obj_add_flag(ui_Login1, LV_OBJ_FLAG_EVENT_BUBBLE);                           /// Flags
     lv_obj_remove_flag(ui_Login1, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_SCROLLABLE); /// Flags
@@ -616,6 +616,7 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_style_bg_opa(ui_Login1, 255, LV_PART_MAIN | LV_STATE_USER_1);
     lv_obj_set_style_bg_color(ui_Login1, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_USER_2);
     lv_obj_set_style_bg_opa(ui_Login1, 0, LV_PART_MAIN | LV_STATE_USER_2);
+    lv_obj_add_event_cb(ui_Login1, ui_event_Register, LV_EVENT_ALL, NULL);
 
     ui_LoginText1 = lv_label_create(ui_RegisterSelect);
     lv_obj_set_width(ui_LoginText1, LV_SIZE_CONTENT);  /// 1
@@ -641,7 +642,7 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_width(ui_RegisterBtn, 260);
     lv_obj_set_height(ui_RegisterBtn, 35);
     lv_obj_set_x(ui_RegisterBtn, 5);
-    lv_obj_set_y(ui_RegisterBtn, -40);
+    lv_obj_set_y(ui_RegisterBtn, -20);
     lv_obj_set_align(ui_RegisterBtn, LV_ALIGN_BOTTOM_MID);
     lv_obj_add_flag(ui_RegisterBtn, LV_OBJ_FLAG_SCROLL_ON_FOCUS); /// Flags
     lv_obj_remove_flag(ui_RegisterBtn, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
@@ -659,7 +660,7 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_width(ui_RegisterArea, 290);
     lv_obj_set_height(ui_RegisterArea, 203);
     lv_obj_set_x(ui_RegisterArea, 0);
-    lv_obj_set_y(ui_RegisterArea, 10);
+    lv_obj_set_y(ui_RegisterArea, 30);
     lv_obj_set_align(ui_RegisterArea, LV_ALIGN_CENTER);
     lv_obj_remove_flag(ui_RegisterArea, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_RegisterArea, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -671,7 +672,7 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_height(ui_PhoneText2, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PhoneText2, 5);
     lv_obj_set_y(ui_PhoneText2, 0);
-    lv_label_set_text(ui_PhoneText2, "Acount");
+    lv_label_set_text(ui_PhoneText2, "Phone");
     lv_obj_set_style_text_color(ui_PhoneText2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PhoneText2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -738,7 +739,7 @@ void ui_Screen2_screen_init(void)
 
     ui_Keyboard1 = lv_keyboard_create(ui_UserLogin);
     lv_obj_set_width(ui_Keyboard1, 400);
-    lv_obj_set_height(ui_Keyboard1, 140);
+    lv_obj_set_height(ui_Keyboard1, 170);
     lv_obj_set_x(ui_Keyboard1, 0);
     lv_obj_set_y(ui_Keyboard1, 15);
     lv_obj_set_align(ui_Keyboard1, LV_ALIGN_BOTTOM_MID);

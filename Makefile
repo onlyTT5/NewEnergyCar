@@ -75,4 +75,4 @@ uninstall:
 	$(RM) -r $(addprefix $(DESTDIR)$(bindir)/,$(BIN))
 
 send:
-	scp ./build/bin/main root@192.168.7.122:/study/
+	scp ./build/bin/main root@192.168.7.122:/study/Project

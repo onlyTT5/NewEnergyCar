@@ -273,7 +273,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_width(ui_LoginOpera1, 400);
     lv_obj_set_height(ui_LoginOpera1, 360);
     lv_obj_set_x(ui_LoginOpera1, 0);
-    lv_obj_set_y(ui_LoginOpera1, 30);
+    lv_obj_set_y(ui_LoginOpera1, 0);
     lv_obj_set_align(ui_LoginOpera1, LV_ALIGN_CENTER);
     lv_obj_remove_flag(ui_LoginOpera1, LV_OBJ_FLAG_SCROLLABLE); /// Flags
     lv_obj_set_style_bg_color(ui_LoginOpera1, lv_color_hex(0x1A1A1A), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -379,7 +379,7 @@ void ui_Screen3_screen_init(void)
 
     ui_Keyboard2 = lv_keyboard_create(ui_UserLogin1);
     lv_obj_set_width(ui_Keyboard2, 400);
-    lv_obj_set_height(ui_Keyboard2, 140);
+    lv_obj_set_height(ui_Keyboard2, 180);
     lv_obj_set_x(ui_Keyboard2, 0);
     lv_obj_set_y(ui_Keyboard2, 15);
     lv_obj_set_align(ui_Keyboard2, LV_ALIGN_BOTTOM_MID);

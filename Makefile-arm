@@ -30,7 +30,7 @@ MAINSRC          = ./main.c
 
 include $(LVGL_DIR)/lvgl/lvgl.mk
 
-# CSRCS 			+= $(shell find ./UI -type f -name '*.c')
+CSRCS 			+= $(shell find ./UI -type f -name '*.c')
 CSRCS 			+=$(LVGL_DIR)/mouse_cursor_icon.c 
 
 OBJEXT 			?= .o
@@ -75,4 +75,4 @@ uninstall:
 	$(RM) -r $(addprefix $(DESTDIR)$(bindir)/,$(BIN))
 
 send:
-	scp ./build/bin/main root@192.168.7.122:/study/
+	scp ./build/bin/main root@192.168.7.122:/study/Project
