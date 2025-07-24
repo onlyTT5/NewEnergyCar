@@ -1,119 +1,107 @@
-# LVGL on top of Linux graphics stack
+# 用户管理系统使用指南
 
-Example project to use LVGL on top of Linux graphics stack.
-Currently supported backends are either legacy framebuffer
-(fbdev), modern DRM/KMS, or SDL2.
+## 系统概述
 
-By default, legacy framebuffer backend uses `/dev/fb0` device node,
-DRM/KMS backend uses '/dev/dri/card0' card node, SDL2 uses window
-resolution of 800x480.
+本用户管理系统实现了基于LVGL的用户注册和登录功能，数据存储在文件中，支持在Screen5中查看用户信息。
 
-Check out this blog post for a step by step tutorial:
-https://blog.lvgl.io/2018-01-03/linux_fb
+## 主要功能
 
-## Clone the project
+### 1. 用户注册
 
-Clone the LVGL Framebuffer Demo project and its related sub modules.
+- 位置：Screen2 注册页面
+- 输入字段：
+  - 手机号 (ui_PhoneTx2)
+  - 密码 (ui_PasswordTx1) 
+  - 确认密码 (ui_ConfirmTx)
+- 验证：密码匹配检查、手机号重复检查
+- 新用户默认余额：1000$
 
-```
-git clone https://github.com/lvgl/lv_port_linux.git
-cd lv_port_linux/
-git submodule update --init --recursive
-```
+### 2. 用户登录
 
-## Select graphics backend (optional)
+- 位置：Screen2 登录页面
+- 输入字段：
+  - 手机号 (ui_PhoneTx1)
+  - 密码 (ui_PasswordTx)
+- 登录成功后会更新用户登录次数
 
-To use legacy framebuffer (fbdev) support, adjust `lv_conf.h` as follows:
-```
-#define LV_USE_LINUX_FBDEV	1
-#define LV_USE_LINUX_DRM	0
-#define LV_USE_SDL		0
-```
+### 3. 用户信息显示
 
-To use modern DRM/KMS support, adjust `lv_conf.h` as follows:
-```
-#define LV_USE_LINUX_FBDEV	0
-#define LV_USE_LINUX_DRM	1
-#define LV_USE_SDL		0
-```
+- 位置：Screen5 用户管理页面
+- 显示字段：
+  - 编号 (ui_UserNum1/2)
+  - 手机号 (ui_UserPhone1/2)
+  - 登录次数 (ui_UserTime1/2)
+  - 余额 (ui_UserBalance1/2)
+  - 消费金额 (ui_UserExpand1/2)
 
-To use SDL2 support, adjust `lv_conf.h` as follows:
-```
-#define LV_USE_LINUX_FBDEV	0
-#define LV_USE_LINUX_DRM	0
-#define LV_USE_SDL		1
-```
+## 默认管理员账户
 
-## Build the project (cmake or Makefile)
+- 手机号：admin
+- 密码：admin123
+- 权限：管理员
+- 余额：10000$
 
-### cmake
+## 数据存储
 
-```
-mkdir build
-cd build 
-cmake ..
-make -j
-```
+- 文件名：users.txt
+- 格式：用户ID 手机号 密码 登录次数 余额 消费金额 是否管理员
+- 自动保存：注册和登录时自动保存到文件
 
-### Makefile
+## 核心文件说明
 
-```
-make -j
-```
+### user_management.h/c
 
-## Environment variables
+- 用户管理核心功能
+- 用户注册、登录、数据存储
 
-Environment variables can be set to modify behavior of the demo.
-The following variables are supported.
+### ui_login.h/c  
 
-### Legacy framebuffer (fbdev)
+- 登录界面相关功能
+- 处理登录和注册事件
 
-- `LV_LINUX_FBDEV_DEVICE` - override default (`/dev/fb0`) framebuffer device node.
+### main.c
 
-### DRM/KMS
+- 程序入口
+- 初始化用户管理系统
 
-- `LV_LINUX_DRM_CARD` - override default (`/dev/dri/card0`) card.
+### ui_Screen2.c
 
-### SDL2
+- 登录和注册界面
+- 事件处理函数修改
 
-- `LV_SDL_VIDEO_WIDTH` - width of SDL2 surface (default `800`).
-- `LV_SDL_VIDEO_HEIGHT` - height of SDL2 surface (default `480`).
+### ui_Screen5.c
 
-## Run the demo application
+- 用户管理显示界面
+- update_user_management_display() 函数
 
-### As root
+## 使用流程
 
-Normal users don't have access to `/dev/fb0` so use `sudo` (or see below) : 
+1. 程序启动时自动初始化用户管理系统
+2. 创建默认管理员账户（如果不存在）
+3. 用户可以在Screen2进行注册和登录
+4. 注册成功后用户信息保存到文件
+5. 登录成功后更新登录次数
+6. 在Screen5可以查看用户管理信息
 
-cmake:
-```
-cd ../bin
-sudo main
-```
+## 编译和运行
 
-Makefile:
-```
-cd build/bin/
-sudo main
+```bash
+make clean && make
+./build/bin/main
 ```
 
-### Userland
+## 注意事项
 
-You can give a normal user access to the framebuffer by adding them to the `video` group : 
+1. 手机号作为唯一标识符，不允许重复
+2. 密码以明文存储（生产环境建议加密）
+3. 数据文件users.txt在程序目录下
+4. Screen5最多显示前两个用户的信息
+5. 系统支持最多100个用户
 
+## 扩展功能建议
 
-cmake:
-```
-sudo adduser $USER video
-newgrp video
-cd ../bin
-./main
-```
-
-Makefile:
-```
-sudo adduser $USER video
-newgrp video
-cd build/bin/
-./main
-```
+- 密码加密存储
+- 更多用户信息字段
+- 用户头像支持
+- 权限管理系统
+- 数据库存储替代文件存储
