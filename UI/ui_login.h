@@ -11,6 +11,12 @@ void handle_login_attempt(void);
 void handle_register_attempt(void);
 void clear_login_inputs(void);
 
+// 错误消息显示函数
+void show_login_error(const char *message);
+void hide_login_error(void);
+void show_register_error(const char *message);
+void hide_register_error(void);
+
 // 回调函数
 void login_btn_callback(lv_event_t *e);
 void register_btn_callback(lv_event_t *e);

@@ -34,26 +34,6 @@ static void lv_linux_disp_init(void)
 #error Unsupported configuration
 #endif
 
-void my_chinese_font(char *text)
-{
-    // 1.创建中文字体
-    lv_font_t *font = lv_freetype_font_create("/study/simhei.ttf", // 👍加载字库文件
-                                              LV_FREETYPE_FONT_RENDER_MODE_BITMAP,
-                                              24,
-                                              LV_FREETYPE_FONT_STYLE_NORMAL);
-
-    // 2.创建中文字体样式
-    static lv_style_t style;
-    lv_style_init(&style);                                 // 初始化样式
-    lv_style_set_text_font(&style, font);                  // 设置中文字体样式
-    lv_style_set_text_align(&style, LV_TEXT_ALIGN_CENTER); // 字体居中显示
-
-    lv_obj_t *label = lv_label_create(lv_screen_active());
-    lv_obj_add_style(label, &style, 0); // 👍给标签添加中文字体
-    lv_label_set_text(label, text);
-    lv_obj_center(label);
-}
-
 int main(void)
 {
     lv_init();

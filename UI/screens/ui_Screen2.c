@@ -58,6 +58,47 @@ lv_obj_t *ui_PasswordText1 = NULL;
 lv_obj_t *ui_ConfirmTx = NULL;
 lv_obj_t *ui_ConfirmText = NULL;
 lv_obj_t *ui_Keyboard1 = NULL;
+lv_obj_t *ui_LoginErrorLabel = NULL;
+lv_obj_t *ui_RegisterErrorLabel = NULL;
+
+// 显示登录错误消息
+void show_login_error(const char *message)
+{
+    if (ui_LoginErrorLabel != NULL)
+    {
+        lv_label_set_text(ui_LoginErrorLabel, message);
+        apply_chinese_font_to_label_sized(ui_LoginErrorLabel, 16);
+        lv_obj_remove_flag(ui_LoginErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+// 隐藏登录错误消息
+void hide_login_error(void)
+{
+    if (ui_LoginErrorLabel != NULL)
+    {
+        lv_obj_add_flag(ui_LoginErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+// 显示注册错误消息
+void show_register_error(const char *message)
+{
+    if (ui_RegisterErrorLabel != NULL)
+    {
+        lv_label_set_text(ui_RegisterErrorLabel, message);
+        lv_obj_remove_flag(ui_RegisterErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+// 隐藏注册错误消息
+void hide_register_error(void)
+{
+    if (ui_RegisterErrorLabel != NULL)
+    {
+        lv_obj_add_flag(ui_RegisterErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
 // event funtions
 void ui_event_BackIndex(lv_event_t *e)
 {
@@ -97,6 +138,8 @@ void ui_event_PhoneTx1(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard1, ui_PhoneTx1);
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏登录错误消息
+        hide_login_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -112,6 +155,8 @@ void ui_event_PasswordTx(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard1, ui_PasswordTx);
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏登录错误消息
+        hide_login_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -150,6 +195,8 @@ void ui_event_PhoneTx2(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard1, ui_PhoneTx2);
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏注册错误消息
+        hide_register_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -165,6 +212,8 @@ void ui_event_PasswordTx1(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard1, ui_PasswordTx1);
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏注册错误消息
+        hide_register_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -180,6 +229,8 @@ void ui_event_ConfirmTx(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard1, ui_ConfirmTx);
         _ui_flag_modify(ui_Keyboard1, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏注册错误消息
+        hide_register_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -773,6 +824,34 @@ void ui_Screen2_screen_init(void)
     lv_obj_add_event_cb(ui_PasswordTx1, ui_event_PasswordTx1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_ConfirmTx, ui_event_ConfirmTx, LV_EVENT_ALL, NULL);
     lv_keyboard_set_textarea(ui_Keyboard1, ui_PhoneTx1);
+
+    // 创建登录错误提示标签
+    ui_LoginErrorLabel = lv_label_create(ui_LoginOpera);
+    lv_obj_set_width(ui_LoginErrorLabel, 260);
+    lv_obj_set_height(ui_LoginErrorLabel, 20);
+    lv_obj_set_x(ui_LoginErrorLabel, 0);
+    lv_obj_set_y(ui_LoginErrorLabel, -40); // 放在密码框下方
+    lv_obj_set_align(ui_LoginErrorLabel, LV_ALIGN_BOTTOM_MID);
+    lv_label_set_text(ui_LoginErrorLabel, "");
+    lv_obj_set_style_text_color(ui_LoginErrorLabel, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT); // 红色
+    lv_obj_set_style_text_opa(ui_LoginErrorLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LoginErrorLabel, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_LoginErrorLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(ui_LoginErrorLabel, LV_OBJ_FLAG_HIDDEN); // 初始时隐藏
+
+    // 创建注册错误提示标签
+    ui_RegisterErrorLabel = lv_label_create(ui_RegisterArea);
+    lv_obj_set_width(ui_RegisterErrorLabel, 260);
+    lv_obj_set_height(ui_RegisterErrorLabel, 20);
+    lv_obj_set_x(ui_RegisterErrorLabel, 0);
+    lv_obj_set_y(ui_RegisterErrorLabel, 140); // 放在确认密码框下方
+    lv_obj_set_align(ui_RegisterErrorLabel, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_RegisterErrorLabel, "");
+    lv_obj_set_style_text_color(ui_RegisterErrorLabel, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT); // 红色
+    lv_obj_set_style_text_opa(ui_RegisterErrorLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_RegisterErrorLabel, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_RegisterErrorLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(ui_RegisterErrorLabel, LV_OBJ_FLAG_HIDDEN); // 初始时隐藏
 }
 
 void ui_Screen2_screen_destroy(void)
@@ -832,4 +911,6 @@ void ui_Screen2_screen_destroy(void)
     ui_ConfirmTx = NULL;
     ui_ConfirmText = NULL;
     ui_Keyboard1 = NULL;
+    ui_LoginErrorLabel = NULL;
+    ui_RegisterErrorLabel = NULL;
 }

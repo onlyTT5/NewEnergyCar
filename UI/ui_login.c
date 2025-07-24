@@ -24,6 +24,8 @@ void handle_login_attempt(void)
             // 登录成功，更新用户管理显示
             update_user_management_display();
             printf("Login successful, redirecting to main screen\n");
+            // 隐藏错误消息
+            hide_login_error();
             // 清空登录输入框
             lv_textarea_set_text(ui_PhoneTx1, "");
             lv_textarea_set_text(ui_PasswordTx, "");
@@ -33,12 +35,15 @@ void handle_login_attempt(void)
         else
         {
             printf("Login failed: invalid credentials\n");
-            // 这里可以添加显示错误消息的代码
+            // 显示错误消息
+            show_login_error("账号或密码错误");
         }
     }
     else
     {
         printf("Login failed: empty phone or password\n");
+        // 显示错误消息
+        show_login_error("请输入账号和密码");
     }
 }
 
@@ -95,18 +100,22 @@ void handle_register_attempt(void)
         strlen(phone) == 0 || strlen(password) == 0 || strlen(confirm_password) == 0)
     {
         printf("Registration failed: empty fields\n");
+        show_register_error("请填写完整信息");
         return;
     }
 
     if (strcmp(password, confirm_password) != 0)
     {
         printf("Registration failed: passwords do not match\n");
+        show_register_error("两次密码输入不一致");
         return;
     }
 
     if (register_user(phone, password))
     {
         printf("Registration successful for phone: %s\n", phone);
+        // 隐藏错误消息
+        hide_register_error();
         // 清空注册表单
         lv_textarea_set_text(ui_PhoneTx2, "");
         lv_textarea_set_text(ui_PasswordTx1, "");
@@ -122,6 +131,7 @@ void handle_register_attempt(void)
     else
     {
         printf("Registration failed\n");
+        show_register_error("注册失败，账号可能已存在");
     }
 }
 

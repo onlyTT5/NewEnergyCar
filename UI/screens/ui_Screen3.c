@@ -4,6 +4,7 @@
 // Project name: SquareLine_Project
 
 #include "../ui.h"
+#include <string.h>
 
 lv_obj_t *ui_Screen3 = NULL;
 lv_obj_t *ui_UserLoginSlider1 = NULL;
@@ -34,6 +35,27 @@ lv_obj_t *ui_PasswordTx2 = NULL;
 lv_obj_t *ui_LoginBtn1 = NULL;
 lv_obj_t *ui_LoginBtnText1 = NULL;
 lv_obj_t *ui_Keyboard2 = NULL;
+lv_obj_t *ui_AdminErrorLabel = NULL;
+
+// 显示管理员登录错误消息
+void show_admin_error(const char *message)
+{
+    if (ui_AdminErrorLabel != NULL)
+    {
+        lv_label_set_text(ui_AdminErrorLabel, message);
+        apply_chinese_font_to_label_sized(ui_AdminErrorLabel, 16);
+        lv_obj_remove_flag(ui_AdminErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+// 隐藏管理员登录错误消息
+void hide_admin_error(void)
+{
+    if (ui_AdminErrorLabel != NULL)
+    {
+        lv_obj_add_flag(ui_AdminErrorLabel, LV_OBJ_FLAG_HIDDEN);
+    }
+}
 // event funtions
 void ui_event_BackIndex1(lv_event_t *e)
 {
@@ -52,6 +74,8 @@ void ui_event_PhoneTx3(lv_event_t *e)
     if (event_code == LV_EVENT_CLICKED)
     {
         _ui_keyboard_set_target(ui_Keyboard2, ui_PhoneTx3);
+        // 隐藏管理员登录错误消息
+        hide_admin_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -71,6 +95,8 @@ void ui_event_PasswordTx2(lv_event_t *e)
     {
         _ui_keyboard_set_target(ui_Keyboard2, ui_PasswordTx2);
         _ui_flag_modify(ui_Keyboard2, LV_OBJ_FLAG_HIDDEN, _UI_MODIFY_FLAG_REMOVE);
+        // 隐藏管理员登录错误消息
+        hide_admin_error();
     }
     if (event_code == LV_EVENT_DEFOCUSED)
     {
@@ -84,7 +110,32 @@ void ui_event_LoginBtn1(lv_event_t *e)
 
     if (event_code == LV_EVENT_CLICKED)
     {
-        _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen5_screen_init);
+        // 获取输入的账号和密码
+        const char *phone = lv_textarea_get_text(ui_PhoneTx3);
+        const char *password = lv_textarea_get_text(ui_PasswordTx2);
+
+        if (phone && password && strlen(phone) > 0 && strlen(password) > 0)
+        {
+            // 验证管理员账号密码
+            if (strcmp(phone, "admin") == 0 && strcmp(password, "admin123") == 0)
+            {
+                // 登录成功
+                hide_admin_error();
+                lv_textarea_set_text(ui_PhoneTx3, "");
+                lv_textarea_set_text(ui_PasswordTx2, "");
+                _ui_screen_change(&ui_Screen5, LV_SCR_LOAD_ANIM_FADE_ON, 500, 0, &ui_Screen5_screen_init);
+            }
+            else
+            {
+                // 账号或密码错误
+                show_admin_error("管理员账号或密码错误");
+            }
+        }
+        else
+        {
+            // 输入为空
+            show_admin_error("请输入管理员账号和密码");
+        }
     }
 }
 
@@ -318,7 +369,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_set_height(ui_PhoneText3, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PhoneText3, 5);
     lv_obj_set_y(ui_PhoneText3, 0);
-    lv_label_set_text(ui_PhoneText3, "Phone");
+    lv_label_set_text(ui_PhoneText3, "Account");
     lv_obj_set_style_text_color(ui_PhoneText3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PhoneText3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -368,7 +419,7 @@ void ui_Screen3_screen_init(void)
     lv_obj_remove_flag(ui_LoginBtn1, LV_OBJ_FLAG_SCROLLABLE);   /// Flags
     lv_obj_set_style_bg_color(ui_LoginBtn1, lv_color_hex(0x00D4FF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_LoginBtn1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_add_event_cb(ui_LoginBtn1, ClearText1, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_LoginBtn1, ui_event_LoginBtn1, LV_EVENT_ALL, NULL);
 
     ui_LoginBtnText1 = lv_label_create(ui_LoginBtn1);
     lv_obj_set_width(ui_LoginBtnText1, LV_SIZE_CONTENT);  /// 1
@@ -405,8 +456,21 @@ void ui_Screen3_screen_init(void)
     lv_obj_add_event_cb(ui_BackIndex1, ui_event_BackIndex1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_PhoneTx3, ui_event_PhoneTx3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_PasswordTx2, ui_event_PasswordTx2, LV_EVENT_ALL, NULL);
-    lv_obj_add_event_cb(ui_LoginBtn1, ui_event_LoginBtn1, LV_EVENT_ALL, NULL);
-    lv_keyboard_set_textarea(ui_Keyboard2, ui_PhoneTx1);
+    lv_keyboard_set_textarea(ui_Keyboard2, ui_PhoneTx3);
+
+    // 创建管理员登录错误提示标签
+    ui_AdminErrorLabel = lv_label_create(ui_LoginOpera1);
+    lv_obj_set_width(ui_AdminErrorLabel, 260);
+    lv_obj_set_height(ui_AdminErrorLabel, 20);
+    lv_obj_set_x(ui_AdminErrorLabel, 0);
+    lv_obj_set_y(ui_AdminErrorLabel, 60); // 放在密码框下方
+    lv_obj_set_align(ui_AdminErrorLabel, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_AdminErrorLabel, "");
+    lv_obj_set_style_text_color(ui_AdminErrorLabel, lv_color_hex(0xFF0000), LV_PART_MAIN | LV_STATE_DEFAULT); // 红色
+    lv_obj_set_style_text_opa(ui_AdminErrorLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_AdminErrorLabel, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_AdminErrorLabel, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_add_flag(ui_AdminErrorLabel, LV_OBJ_FLAG_HIDDEN); // 初始时隐藏
 }
 
 void ui_Screen3_screen_destroy(void)
@@ -444,4 +508,5 @@ void ui_Screen3_screen_destroy(void)
     ui_LoginBtn1 = NULL;
     ui_LoginBtnText1 = NULL;
     ui_Keyboard2 = NULL;
+    ui_AdminErrorLabel = NULL;
 }

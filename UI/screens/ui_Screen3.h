@@ -7,50 +7,56 @@
 #define UI_SCREEN3_H
 
 #ifdef __cplusplus
-extern "C" {
+extern "C"
+{
 #endif
 
-// SCREEN: ui_Screen3
-extern void ui_Screen3_screen_init(void);
-extern void ui_Screen3_screen_destroy(void);
-extern lv_obj_t * ui_Screen3;
-extern lv_obj_t * ui_UserLoginSlider1;
-extern void ui_event_BackIndex1(lv_event_t * e);
-extern lv_obj_t * ui_BackIndex1;
-extern lv_obj_t * ui_BackIndexText1;
-extern lv_obj_t * ui_UserText1;
-extern lv_obj_t * ui_UserInfo1;
-extern lv_obj_t * ui_Info12;
-extern lv_obj_t * ui_Info14;
-extern lv_obj_t * ui_Info15;
-extern lv_obj_t * ui_Info16;
-extern lv_obj_t * ui_Image14;
-extern lv_obj_t * ui_Image15;
-extern lv_obj_t * ui_Image16;
-extern lv_obj_t * ui_Image17;
-extern lv_obj_t * ui_Image18;
-extern lv_obj_t * ui_AdminLogo2;
-extern lv_obj_t * ui_LogoImage3;
-extern lv_obj_t * ui_UserLogin1;
-extern lv_obj_t * ui_LoginOpera1;
-extern lv_obj_t * ui_Logo1;
-extern lv_obj_t * ui_Lightning1;
-extern lv_obj_t * ui_LoginArea1;
-extern lv_obj_t * ui_PhoneText3;
-extern void ui_event_PhoneTx3(lv_event_t * e);
-extern lv_obj_t * ui_PhoneTx3;
-extern lv_obj_t * ui_PasswordText2;
-extern void ui_event_PasswordTx2(lv_event_t * e);
-extern lv_obj_t * ui_PasswordTx2;
-extern void ui_event_LoginBtn1(lv_event_t * e);
-extern lv_obj_t * ui_LoginBtn1;
-extern lv_obj_t * ui_LoginBtnText1;
-extern lv_obj_t * ui_Keyboard2;
-// CUSTOM VARIABLES
+    // SCREEN: ui_Screen3
+    extern void ui_Screen3_screen_init(void);
+    extern void ui_Screen3_screen_destroy(void);
+    extern lv_obj_t *ui_Screen3;
+    extern lv_obj_t *ui_UserLoginSlider1;
+    extern void ui_event_BackIndex1(lv_event_t *e);
+    extern lv_obj_t *ui_BackIndex1;
+    extern lv_obj_t *ui_BackIndexText1;
+    extern lv_obj_t *ui_UserText1;
+    extern lv_obj_t *ui_UserInfo1;
+    extern lv_obj_t *ui_Info12;
+    extern lv_obj_t *ui_Info14;
+    extern lv_obj_t *ui_Info15;
+    extern lv_obj_t *ui_Info16;
+    extern lv_obj_t *ui_Image14;
+    extern lv_obj_t *ui_Image15;
+    extern lv_obj_t *ui_Image16;
+    extern lv_obj_t *ui_Image17;
+    extern lv_obj_t *ui_Image18;
+    extern lv_obj_t *ui_AdminLogo2;
+    extern lv_obj_t *ui_LogoImage3;
+    extern lv_obj_t *ui_UserLogin1;
+    extern lv_obj_t *ui_LoginOpera1;
+    extern lv_obj_t *ui_Logo1;
+    extern lv_obj_t *ui_Lightning1;
+    extern lv_obj_t *ui_LoginArea1;
+    extern lv_obj_t *ui_PhoneText3;
+    extern void ui_event_PhoneTx3(lv_event_t *e);
+    extern lv_obj_t *ui_PhoneTx3;
+    extern lv_obj_t *ui_PasswordText2;
+    extern void ui_event_PasswordTx2(lv_event_t *e);
+    extern lv_obj_t *ui_PasswordTx2;
+    extern void ui_event_LoginBtn1(lv_event_t *e);
+    extern lv_obj_t *ui_LoginBtn1;
+    extern lv_obj_t *ui_LoginBtnText1;
+    extern lv_obj_t *ui_Keyboard2;
+    extern lv_obj_t *ui_AdminErrorLabel;
+
+    // 管理员错误消息显示函数声明
+    void show_admin_error(const char *message);
+    void hide_admin_error(void);
+
+    // CUSTOM VARIABLES
 
 #ifdef __cplusplus
 } /*extern "C"*/
 #endif
 
 #endif
-
