@@ -19,6 +19,13 @@ static int charging_time_seconds = 0; // 充电时间（秒）
 static float vehicle_battery = 0.0f;  // 车辆电量（0-6000）
 static float charging_cost = 0.0f;    // 充电费用
 
+// 快充模式相关变量
+static bool is_fast_charging = false; // 快充模式标记
+static float normal_price = 1.5f;     // 正常充电价格
+static float fast_price = 1.8f;       // 快充价格
+static int normal_power = 60;         // 正常功率
+static int fast_power = 120;          // 快充功率
+
 // 更新充电按钮外观的函数
 static void update_charge_button_appearance(void)
 {
@@ -265,6 +272,37 @@ void ui_event_FindRechargeSelect1(lv_event_t *e)
     }
 }
 
+// Button1快充模式切换事件处理函数
+void ui_event_Button1(lv_event_t *e)
+{
+    lv_event_code_t event_code = lv_event_get_code(e);
+
+    if (event_code == LV_EVENT_CLICKED)
+    {
+        // 切换快充模式
+        is_fast_charging = !is_fast_charging;
+
+        if (is_fast_charging)
+        {
+            // 切换到快充模式
+            lv_label_set_text(ui_Power, "120");                // Power变成120
+            lv_label_set_text(ui_Price, "1.8");                // Price价格变成1.8
+            lv_label_set_text(ui_Label25, "DC fast charging"); // Label25标签变成DC fast charging
+            lv_label_set_text(ui_Label29, "120");              // Label29变成120
+            printf("切换到快充模式：功率120kW，价格$1.8/kWh\n");
+        }
+        else
+        {
+            // 恢复到正常模式
+            lv_label_set_text(ui_Power, "60");                 // Power恢复为60
+            lv_label_set_text(ui_Price, "1.5");                // Price价格恢复为1.5
+            lv_label_set_text(ui_Label25, "DC slow charging"); // Label25标签变成DC slow charging
+            lv_label_set_text(ui_Label29, "60");               // Label29恢复为60
+            printf("切换到慢充模式：功率60kW，价格$1.5/kWh\n");
+        }
+    }
+}
+
 void ui_event_FindRechargeSelect2(lv_event_t *e)
 {
     lv_event_code_t event_code = lv_event_get_code(e);
@@ -381,8 +419,16 @@ static void charging_timer_cb(lv_timer_t *timer)
         // 更新充电时间
         charging_time_seconds++;
 
+        // 根据快充模式调整充电速度
+        int charge_increment = is_fast_charging ? 2 : 1;                    // 快充模式下充电速度加倍
+        float current_price = is_fast_charging ? fast_price : normal_price; // 根据模式选择价格
+
         // 更新进度条百分比
-        current_charge_percentage++;
+        current_charge_percentage += charge_increment;
+        if (current_charge_percentage > 100)
+        {
+            current_charge_percentage = 100; // 确保不超过100%
+        }
         lv_bar_set_value(ui_CurrentCharging, current_charge_percentage, LV_ANIM_ON);
 
         // 更新百分比文本
@@ -404,14 +450,14 @@ static void charging_timer_cb(lv_timer_t *timer)
         snprintf(battery_text, sizeof(battery_text), "%.1f", vehicle_battery);
         lv_label_set_text(ui_Label31, battery_text);
 
-        // 更新充电费用（每秒1.5元）
-        charging_cost += 1.5f;
+        // 更新充电费用（根据模式选择每秒扣费）
+        charging_cost += current_price;
 
         // 扣除用户余额
         user_info_t *current_user = get_current_user();
         if (current_user != NULL)
         {
-            if (deduct_user_balance(1.5f))
+            if (deduct_user_balance(current_price))
             {
                 // 更新客户余额显示（ui_Label33）
                 char balance_text[16];
@@ -433,8 +479,9 @@ static void charging_timer_cb(lv_timer_t *timer)
             }
         }
 
-        printf("充电进度: %d%%, 时间: %s, 电量: %.1f, 费用: $%.2f\n",
-               current_charge_percentage, time_text, vehicle_battery, charging_cost);
+        printf("充电进度: %d%%, 时间: %s, 电量: %.1f, 费用: $%.2f, 模式: %s\n",
+               current_charge_percentage, time_text, vehicle_battery, charging_cost,
+               is_fast_charging ? "快充" : "慢充");
 
         // 充电完成时停止定时器
         if (current_charge_percentage >= 100)
@@ -469,10 +516,12 @@ void ui_event_StopChargeBtn(lv_event_t *e)
                 return;
             }
 
-            // 检查用户余额是否足够（至少需要1.5元）
-            if (current_user->balance < 1.5f)
+            // 根据当前模式选择价格检查余额
+            float current_price = is_fast_charging ? fast_price : normal_price;
+            if (current_user->balance < current_price)
             {
-                printf("充电失败：余额不足，当前余额 $%.2f\n", current_user->balance);
+                printf("充电失败：余额不足，当前余额 $%.2f，需要 $%.2f\n",
+                       current_user->balance, current_price);
                 return;
             }
 
@@ -494,8 +543,8 @@ void ui_event_StopChargeBtn(lv_event_t *e)
             snprintf(balance_text, sizeof(balance_text), "$%.2f", current_user->balance);
             lv_label_set_text(ui_Label33, balance_text);
 
-            printf("开始充电，起始电量: %d%%, 车辆电池: %.1f, 用户余额: $%.2f\n",
-                   current_charge_percentage, vehicle_battery, current_user->balance);
+            printf("开始充电，模式: %s，起始电量: %d%%, 车辆电池: %.1f, 用户余额: $%.2f\n",
+                   is_fast_charging ? "快充" : "慢充", current_charge_percentage, vehicle_battery, current_user->balance);
 
             // 创建定时器，每秒执行一次
             if (charging_timer == NULL)
@@ -2613,6 +2662,7 @@ void ui_Screen4_screen_init(void)
     lv_obj_add_event_cb(ui_LocationInfo2, ui_event_LocationInfo2, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_LocationInfo3, ui_event_LocationInfo3, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_LocationInfo9, ui_event_LocationInfo9, LV_EVENT_ALL, NULL);
+    lv_obj_add_event_cb(ui_Button1, ui_event_Button1, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_BatteryCapacity, ui_event_BatteryCapacity, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_Label37, ui_event_Label37, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_StopChargeBtn, ui_event_StopChargeBtn, LV_EVENT_ALL, NULL);
@@ -2640,6 +2690,10 @@ void ui_Screen4_screen_init(void)
     charging_time_seconds = 0;
     vehicle_battery = 0.0f;
     charging_cost = 0.0f;
+
+    // 初始化快充模式为关闭状态
+    is_fast_charging = false;
+    lv_label_set_text(ui_Label25, "DC slow charging"); // 默认为慢充
 
     // 同步用户余额显示
     sync_user_balance_display();
