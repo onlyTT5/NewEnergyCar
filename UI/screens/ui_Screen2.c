@@ -87,6 +87,7 @@ void show_register_error(const char *message)
     if (ui_RegisterErrorLabel != NULL)
     {
         lv_label_set_text(ui_RegisterErrorLabel, message);
+        apply_chinese_font_to_label_sized(ui_RegisterErrorLabel, 16);
         lv_obj_remove_flag(ui_RegisterErrorLabel, LV_OBJ_FLAG_HIDDEN);
     }
 }

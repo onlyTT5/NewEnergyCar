@@ -88,7 +88,7 @@ static uint32_t tick_get_cb(void);
 /**********************
  *   GLOBAL FUNCTIONS
  **********************/
-
+ 
 lv_display_t * lv_linux_fbdev_create(void)
 {
     static bool inited = false;
