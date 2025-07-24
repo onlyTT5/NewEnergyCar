@@ -159,7 +159,7 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_style_text_font(ui_ClockText, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
     apply_chinese_font_to_label_sized(ui_ClockText, 20);
 
-        ui_location = lv_obj_create(ui_functions);
+    ui_location = lv_obj_create(ui_functions);
     lv_obj_remove_style_all(ui_location);
     lv_obj_set_width(ui_location, 100);
     lv_obj_set_height(ui_location, 39);
@@ -399,9 +399,10 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_x(ui_AdminText2, 0);
     lv_obj_set_y(ui_AdminText2, -10);
     lv_obj_set_align(ui_AdminText2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_AdminText2, "Admin");
+    lv_label_set_text(ui_AdminText2, "管理员");
     lv_obj_set_style_text_color(ui_AdminText2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_AdminText2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_AdminText2, 18);
 
     ui_User = lv_obj_create(ui_UserAndAdmin);
     lv_obj_set_width(ui_User, 240);
@@ -520,9 +521,10 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_x(ui_UserText3, 0);
     lv_obj_set_y(ui_UserText3, -10);
     lv_obj_set_align(ui_UserText3, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_UserText3, "User");
+    lv_label_set_text(ui_UserText3, "用户");
     lv_obj_set_style_text_color(ui_UserText3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserText3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_UserText3, 18);
 
     ui_BottomText = lv_obj_create(ui_IndexBottom);
     lv_obj_remove_style_all(ui_BottomText);
@@ -537,10 +539,11 @@ void ui_Screen1_screen_init(void)
     lv_obj_set_width(ui_BText, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_BText, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_BText, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_BText, "Please select your identity");
+    lv_label_set_text(ui_BText, "请选择你的身份");
     lv_obj_set_style_text_color(ui_BText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_BText, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_BText, &lv_font_montserrat_24, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_BText, 24);
 
     lv_obj_add_event_cb(ui_Admin, ui_event_Admin, LV_EVENT_ALL, NULL);
     lv_obj_add_event_cb(ui_User, ui_event_User, LV_EVENT_ALL, NULL);

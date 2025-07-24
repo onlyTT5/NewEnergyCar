@@ -284,7 +284,8 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_width(ui_BackIndexText, LV_SIZE_CONTENT);  /// 1
     lv_obj_set_height(ui_BackIndexText, LV_SIZE_CONTENT); /// 1
     lv_obj_set_align(ui_BackIndexText, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_BackIndexText, "Back");
+    lv_label_set_text(ui_BackIndexText, "返回");
+    apply_chinese_font_to_label_sized(ui_BackIndexText, 18);
 
     ui_UserLogo1 = lv_obj_create(ui_UserLoginSlider);
     lv_obj_remove_style_all(ui_UserLogo1);
@@ -312,9 +313,10 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_x(ui_UserText2, 0);
     lv_obj_set_y(ui_UserText2, 150);
     lv_obj_set_align(ui_UserText2, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_UserText2, "User");
+    lv_label_set_text(ui_UserText2, "用户");
     lv_obj_set_style_text_color(ui_UserText2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_UserText2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_UserText2, 18);
 
     ui_UserInfo2 = lv_obj_create(ui_UserLoginSlider);
     lv_obj_remove_style_all(ui_UserInfo2);
@@ -453,7 +455,7 @@ void ui_Screen2_screen_init(void)
 
     ui_LoginSelect = lv_obj_create(ui_LoginOpera);
     lv_obj_set_width(ui_LoginSelect, 300);
-    lv_obj_set_height(ui_LoginSelect, 30);
+    lv_obj_set_height(ui_LoginSelect, 40);
     lv_obj_set_x(ui_LoginSelect, 0);
     lv_obj_set_y(ui_LoginSelect, 100);
     lv_obj_set_align(ui_LoginSelect, LV_ALIGN_TOP_MID);
@@ -464,7 +466,7 @@ void ui_Screen2_screen_init(void)
 
     ui_Login = lv_obj_create(ui_LoginSelect);
     lv_obj_set_width(ui_Login, 100);
-    lv_obj_set_height(ui_Login, 30);
+    lv_obj_set_height(ui_Login, 40);
     lv_obj_set_align(ui_Login, LV_ALIGN_LEFT_MID);
     lv_obj_add_flag(ui_Login, LV_OBJ_FLAG_EVENT_BUBBLE);  /// Flags
     lv_obj_remove_flag(ui_Login, LV_OBJ_FLAG_SCROLLABLE); /// Flags
@@ -479,7 +481,7 @@ void ui_Screen2_screen_init(void)
 
     ui_Register = lv_obj_create(ui_LoginSelect);
     lv_obj_set_width(ui_Register, 100);
-    lv_obj_set_height(ui_Register, 30);
+    lv_obj_set_height(ui_Register, 40);
     lv_obj_set_align(ui_Register, LV_ALIGN_RIGHT_MID);
     lv_obj_add_flag(ui_Register, LV_OBJ_FLAG_EVENT_BUBBLE);                           /// Flags
     lv_obj_remove_flag(ui_Register, LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_SCROLLABLE); /// Flags
@@ -500,9 +502,10 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_x(ui_LoginText, 29);
     lv_obj_set_y(ui_LoginText, 0);
     lv_obj_set_align(ui_LoginText, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_LoginText, "Login");
+    lv_label_set_text(ui_LoginText, "登陆");
     lv_obj_set_style_text_color(ui_LoginText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LoginText, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_LoginText, 20);
 
     ui_RegisterText = lv_label_create(ui_LoginSelect);
     lv_obj_set_width(ui_RegisterText, LV_SIZE_CONTENT);  /// 1
@@ -510,9 +513,10 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_x(ui_RegisterText, -15);
     lv_obj_set_y(ui_RegisterText, 0);
     lv_obj_set_align(ui_RegisterText, LV_ALIGN_RIGHT_MID);
-    lv_label_set_text(ui_RegisterText, "Register");
+    lv_label_set_text(ui_RegisterText, "注册");
     lv_obj_set_style_text_color(ui_RegisterText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_RegisterText, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_RegisterText, 20);
 
     ui_LoginBtn = lv_button_create(ui_LoginOpera);
     lv_obj_set_width(ui_LoginBtn, 260);
@@ -548,9 +552,10 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_height(ui_PhoneText1, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PhoneText1, 5);
     lv_obj_set_y(ui_PhoneText1, 0);
-    lv_label_set_text(ui_PhoneText1, "Phone");
+    lv_label_set_text(ui_PhoneText1, "手机");
     lv_obj_set_style_text_color(ui_PhoneText1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PhoneText1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_PhoneText1, 14);
 
     ui_PhoneTx1 = lv_textarea_create(ui_LoginArea);
     lv_obj_set_width(ui_PhoneTx1, 260);
@@ -574,9 +579,10 @@ void ui_Screen2_screen_init(void)
     lv_obj_set_height(ui_PasswordText, LV_SIZE_CONTENT); /// 1
     lv_obj_set_x(ui_PasswordText, 5);
     lv_obj_set_y(ui_PasswordText, 60);
-    lv_label_set_text(ui_PasswordText, "PassWord");
+    lv_label_set_text(ui_PasswordText, "密码");
     lv_obj_set_style_text_color(ui_PasswordText, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PasswordText, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    apply_chinese_font_to_label_sized(ui_PasswordText, 14);
 
     ui_PasswordTx = lv_textarea_create(ui_LoginArea);
     lv_obj_set_width(ui_PasswordTx, 260);
