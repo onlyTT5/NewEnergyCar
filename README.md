@@ -86,8 +86,14 @@
 ## 编译和运行
 
 ```bash
-make clean && make
+// 在模拟器运行
+make clean
+make -j12
 ./build/bin/main
+// 在开发板运行
+make clean
+make --file=Makefile-arm -j12
+./main  // 在开发板运行
 ```
 
 ## 注意事项
